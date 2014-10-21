@@ -4,7 +4,7 @@ lib/parser.js: jison/grammar.jison jison/tokens.jisonlex
 	${BIN}/jison $^ -o $@
 
 test: lib/parser.js
-	${BIN}/mocha --reporter spec
+	${BIN}/mocha  --compilers coffee:coffee-script/register --reporter spec
 
 watch:
 	${BIN}/nodemon -x 'make test' -e 'js jison jisonlex' -q
