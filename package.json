@@ -1,0 +1,27 @@
+{
+  "name": "rash",
+  "version": "0.0.1",
+  "description": "A CSS style sheet rationalizer",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://michael_hodgins%40hotmail.com@github.com/michaelhodgins/rash.git"
+  },
+  "keywords": [
+    "CSS"
+  ],
+  "author": "Michael Hodgins",
+  "license": "GNU GPL V2",
+  "bugs": {
+    "url": "https://github.com/michaelhodgins/rash/issues"
+  },
+  "homepage": "https://github.com/michaelhodgins/rash",
+  "devDependencies": {
+    "jison": "^0.4.15",
+    "mocha": "^1.21.5",
+    "nodemon": "^1.2.1"
+  }
+}
