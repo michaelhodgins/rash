@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+var fs = require('fs'),
+    parser = require('../lib/parser').parser,
+    file = process.argv[2],
+    input = fs.readFileSync(file, "utf8");
+
+console.log(parser.parse(input).rash().toCSS())
