@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/michaelhodgins/rash",
   "devDependencies": {
+    "assert": "^1.1.2",
     "coffee-script": "^1.8.0",
     "jison": "^0.4.15",
     "mocha": "^1.21.5",

@@ -1,10 +1,18 @@
 //// Macros
 DIGIT                           [0-9]
 NUMBER                          {DIGIT}+(\.{DIGIT}+)?   // matches: 10 and 3.14
-NAME                            [a-zA-Z][\w\-]*         // matches: body, background-color and myClassName
+NAME                            [a-zA-Z][\w\-]*         // matches: body, background-color, auto and myClassName
 SELECTOR                        (\.|\#|\:\:|\:){NAME}   // matches: #id, .class, :hover and ::before
-DOUBLE_QUOTE_STRING             ('"'.*'"')
-SINGLE_QUOTE_STRING             ("'".*"'")
+//DOUBLE_QUOTE_STRING             '"' ([^\n\r\f\"])* '"'
+//SINGLE_QUOTE_STRING             "'" ([^\n\r\f\"])* "'"
+
+
+UNICODE							'\\' [0-9a-f]{1,6}(\r\n|[\n\r\t\f])?
+ESCAPE							{UNICODE}|'\\'[^\n\r\f0-9a-f]
+NL								\n|\r\n|\r|\f
+DOUBLE_QUOTE_STRING				'"' ([^\n\r\f\\"]| '\\' {nl}|{escape})* '"'
+SINGLE_QUOTE_STRING				"'" ([^\n\r\f\\']| "\\" {nl}|{escape})* "'"
+STRING							{DOUBLE_QUOTE_STRING}|{SINGLE_QUOTE_STRING}
 %%
 
 //// Rules
@@ -17,7 +25,7 @@ SINGLE_QUOTE_STRING             ("'".*"'")
 \#[0-9A-Fa-f]{3,6}              return 'COLOR';         // #fff, #f0f0f0
 
 // strings
-{DOUBLE_QUOTE_STRING}|{SINGLE_QUOTE_STRING}
+{STRING}
 		                        return 'STRING';        // "blah", 'blah'
 
 // Selectors

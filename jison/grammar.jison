@@ -28,6 +28,10 @@ rule:
   selector '{' properties '}'     { $$ = new ast.Rule($1, $3) }
 ;
 
+//selectors:
+//  selector ' ' selector
+//;
+
 selector:
   IDENTIFIER
 | SELECTOR
@@ -48,6 +52,12 @@ property:
 values:
   value                             { $$ = [ $1 ] }
 | values value                      { $$ = $1.concat($2) }
+| valueList                         { $$ = new ast.ValueList($1) }
+;
+
+valueList:
+  value ',' valueList               { $$ = [ $1 ].concat($3) }
+| value ',' value                   { $$ = [$1, $3] }}
 ;
 
 value:
@@ -55,9 +65,11 @@ value:
 | COLOR                             { $$ = new ast.Literal($1) }
 | NUMBER                            { $$ = new ast.Literal($1) }
 | DIMENSION                         { $$ = new ast.Literal($1) }
+| NAME                              { $$ = new ast.Literal($1) }
 | string                            { $$ = new ast.Literal($1) }
 ;
 
 string:
   STRING
 ;
+

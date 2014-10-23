@@ -55,3 +55,38 @@ describe 'Generate an Abstract Syntax Tree', ->
             /* this is a multiline comment */
         }"
         assert.deepEqual parser.parse(css), styleSheet
+
+    it 'parses properties with lists of name values', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('p', [
+                new ast.Property('font-family', new ast.ValueList([
+                    new ast.Literal('Calibri')
+                    new ast.Literal('Helvetica')
+                    new ast.Literal('Arial')
+                    new ast.Literal('sans-serif')
+                ]))
+            ])
+        ]
+        css = 'p {
+            font-family: Calibri, Helvetica, Arial, sans-serif;
+        }'
+        assert.deepEqual parser.parse(css), styleSheet
+
+    it 'parses properties with lists of string and name values', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('p', [
+                new ast.Property('font-family', new ast.ValueList([
+                    new ast.Literal('"Helvetica Neue Light"')
+                    new ast.Literal('"HelveticaNeue-Light"')
+                    new ast.Literal('"Helvetica Neue"')
+                    new ast.Literal('Calibri')
+                    new ast.Literal('Helvetica')
+                    new ast.Literal('Arial')
+                    new ast.Literal('sans-serif')
+                ]))
+            ])
+        ]
+        css = 'p {
+            font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+        }'
+        assert.deepEqual parser.parse(css), styleSheet

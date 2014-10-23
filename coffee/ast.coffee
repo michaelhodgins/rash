@@ -13,7 +13,7 @@ class StyleSheet
         @
 
 ###
-
+Represents a single CSS rule, consisting on a selector and one or more properties.
 ###
 class Rule
     constructor: (@selector, @properties) ->
@@ -25,7 +25,7 @@ class Rule
         "#{@selector} {#{properties}}"
 
 ###
-
+Represents a single CSS property, consisting of a style name, and one or more values.
 ###
 class Property
     constructor: (@name, @values) ->
@@ -37,7 +37,15 @@ class Property
         "#{@name}: #{values}"
 
 ###
+Rep
+###
+class ValueList
+    constructor: (@values) ->
 
+    toCSS: ->
+
+###
+Represents a literal value.
 ###
 class Literal
     constructor: (@value) ->
@@ -50,3 +58,4 @@ exports.StyleSheet = StyleSheet
 exports.Rule = Rule
 exports.Property = Property
 exports.Literal = Literal
+exports.ValueList = ValueList

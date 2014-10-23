@@ -1,0 +1,26 @@
+p {
+    font-size: 10px;
+    font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+}
+ol {
+    list-style: none;
+}
+ol li {
+
+}
+p {
+    font-size: 14px;
+    font-weight: normal
+}
+/*
+this should compile to the following:
+
+p {
+    font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal
+}
+ol {
+    list-style: none;
+}
+*/
