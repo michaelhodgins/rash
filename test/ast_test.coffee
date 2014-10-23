@@ -41,3 +41,17 @@ describe 'Generate an Abstract Syntax Tree', ->
             font-size: 12px;
         }"
         assert.deepEqual parser.parse(css), styleSheet
+
+    it 'ignores comments', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('p', [
+                new ast.Property('font-size', [
+                    new ast.Literal('12px')
+                ])
+            ])
+        ]
+        css = "p{
+            font-size: 12px;
+            /* this is a multiline comment */
+        }"
+        assert.deepEqual parser.parse(css), styleSheet

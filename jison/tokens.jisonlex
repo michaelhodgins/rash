@@ -8,6 +8,7 @@ SINGLE_QUOTE_STRING             ("'".*"'")
 %%
 
 //// Rules
+'/*'[\s\S]*?'*/'				;						// ignore multiline comments
 \s+                             ;                       // ignore spaces, line breaks
 
 // Numbers

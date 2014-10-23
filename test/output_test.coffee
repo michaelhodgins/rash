@@ -37,3 +37,11 @@ describe 'Output valid CSS', ->
         }\n"
         rashedCode = "p {font-size: 12px;font-family: 'Arial'}"
         assert.equal parser.parse(code).toCSS(), rashedCode
+
+    it 'removes comments', ->
+        code = "p {
+            font-size: 12px;
+            /* this is a multiline comment */
+        }\n"
+        rashedCode = "p {font-size: 12px}"
+        assert.equal parser.parse(code).toCSS(), rashedCode
