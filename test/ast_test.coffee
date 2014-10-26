@@ -90,3 +90,16 @@ describe 'Generate an Abstract Syntax Tree', ->
             font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
         }'
         assert.deepEqual parser.parse(css), styleSheet
+
+    it 'parses a rule a nested selector', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('p strong', [
+                new ast.Property('font-size', [
+                    new ast.Literal('12px')
+                ])
+            ])
+        ]
+        css = "p strong {
+            font-size: 12px
+        }"
+        assert.deepEqual parser.parse(css), styleSheet

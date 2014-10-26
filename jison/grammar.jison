@@ -25,12 +25,14 @@ rules:
 ;
 
 rule:
-  selector '{' properties '}'     { $$ = new ast.Rule($1, $3) }
+  selectors '{' properties '}'     { $$ = new ast.Rule($1, $3) }
 ;
 
-//selectors:
-//  selector ' ' selector
-//;
+selectors:
+  selector                         { $$ =  $1 }
+| selectors selector               { $$ = [$1, $2].join(' ') }
+| selectors                        { $$ = $1 }
+;
 
 selector:
   IDENTIFIER

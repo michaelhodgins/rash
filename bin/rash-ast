@@ -5,4 +5,4 @@ var fs = require('fs'),
     file = process.argv[2],
     input = fs.readFileSync(file, "utf8");
 
-console.log(parser.parse(input).rash().toCSS());
+console.log(JSON.stringify(parser.parse(input)));

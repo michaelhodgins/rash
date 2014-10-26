@@ -31,18 +31,25 @@ class Property
     constructor: (@name, @values) ->
 
     toCSS: ->
-        values = @values.map (value) ->
-            value.toCSS()
-        .join " "
-        "#{@name}: #{values}"
+        if @values instanceof Array
+            values = @values.map (value) ->
+                value.toCSS()
+            .join " "
+            "#{@name}: #{values}"
+        else
+            values = @values.toCSS()
 
+        "#{@name}: #{values}"
 ###
-Rep
+Represents a comma separated list of values.
 ###
 class ValueList
     constructor: (@values) ->
 
     toCSS: ->
+        @values.map (value) ->
+            value.toCSS()
+        .join(',')
 
 ###
 Represents a literal value.

@@ -23,10 +23,10 @@ describe 'Output valid CSS', ->
         assert.equal parser.parse(code).toCSS(), rashedCode
 
     it 'compiles one rule with two properties - double quoted string', ->
-        code = "p {
+        code = """p {
             font-size: 12px;
-            font-family: \"Arial\";
-        }\n"
+            font-family: "Arial";
+        }\n"""
         rashedCode = "p {font-size: 12px;font-family: \"Arial\"}"
         assert.equal parser.parse(code).toCSS(), rashedCode
 
@@ -44,4 +44,18 @@ describe 'Output valid CSS', ->
             /* this is a multiline comment */
         }\n"
         rashedCode = "p {font-size: 12px}"
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
+    it 'compiles properties with lists of values', ->
+        code = """p {
+            font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+        }\n"""
+        rashedCode = """p {font-family: "Helvetica Neue Light","HelveticaNeue-Light","Helvetica Neue",Calibri,Helvetica,Arial,sans-serif}"""
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
+    it 'compiles nested selectors', ->
+        code = """p strong {
+            font-weight: bold
+        }\n"""
+        rashedCode = "p strong {font-weight: bold}"
         assert.equal parser.parse(code).toCSS(), rashedCode
