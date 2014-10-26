@@ -59,3 +59,17 @@ describe 'Output valid CSS', ->
         }\n"""
         rashedCode = "p strong {font-weight: bold}"
         assert.equal parser.parse(code).toCSS(), rashedCode
+
+    it 'compiles compound selectors', ->
+        code = """p.well {
+            font-size: 12px
+        }\n"""
+        rashedCode = "p.well {font-size: 12px}"
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
+    it 'compiles nested compound selectors', ->
+        code = """p.well strong {
+            font-weight: 600
+        }\n"""
+        rashedCode = "p.well strong {font-weight: 600}"
+        assert.equal parser.parse(code).toCSS(), rashedCode

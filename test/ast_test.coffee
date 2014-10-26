@@ -91,7 +91,7 @@ describe 'Generate an Abstract Syntax Tree', ->
         }'
         assert.deepEqual parser.parse(css), styleSheet
 
-    it 'parses a rule a nested selector', ->
+    it 'parses a rule with a nested selector', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p strong', [
                 new ast.Property('font-size', [
@@ -101,5 +101,113 @@ describe 'Generate an Abstract Syntax Tree', ->
         ]
         css = "p strong {
             font-size: 12px
+        }"
+        assert.deepEqual parser.parse(css), styleSheet
+
+    it 'parses a rule with a compound selector', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('p.well', [
+                new ast.Property('font-size', [
+                    new ast.Literal('24px')
+                ])
+            ])
+        ]
+        css = "p.well {
+            font-size: 24px
+        }"
+        assert.deepEqual parser.parse(css), styleSheet
+
+    it 'parses a rule with a nested compound selector', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('p.well strong', [
+                new ast.Property('font-size', [
+                    new ast.Literal('24px')
+                ])
+                new ast.Property('font-weight', [
+                    new ast.Literal('600')
+                ])
+            ])
+        ]
+        css = "p.well strong {
+            font-size: 24px;
+            font-weight: 600
+        }"
+        assert.deepEqual parser.parse(css), styleSheet
+
+    it 'parses a selector with the child combinator', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('#container > .box', [
+                new ast.Property('float', [
+                    new ast.Literal('left')
+                ])
+                new ast.Property('padding-bottom', [
+                    new ast.Literal('15px')
+                ])
+            ])
+        ]
+        css = "#container > .box {
+           float: left;
+           padding-bottom: 15px
+        }"
+        assert.deepEqual parser.parse(css), styleSheet
+
+    it 'parses a selector with the sibling combinator', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('h2 ~ p', [
+                new ast.Property('margin-bottom', [
+                    new ast.Literal('20px')
+                ])
+            ])
+        ]
+        css = "h2 ~ p {
+            margin-bottom: 20px;
+        }"
+        assert.deepEqual parser.parse(css), styleSheet
+
+    it 'parses a selector with the adjacent combinator', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('p + p', [
+                new ast.Property('text-indent', [
+                    new ast.Literal('1.5em')
+                ])
+                new ast.Property('margin-bottom', [
+                    new ast.Literal('0')
+                ])
+            ])
+        ]
+        css = "p + p {
+            text-indent: 1.5em;
+            margin-bottom: 0;
+        }"
+        assert.deepEqual parser.parse(css), styleSheet
+
+    it 'parses a selector with a pseudoclass', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('a:hover', [
+                new ast.Property('color', [
+                    new ast.Literal('red')
+                ])
+            ])
+        ]
+        css = "a:hover {
+            color: red;
+        }"
+        assert.deepEqual parser.parse(css), styleSheet
+
+    it 'parses a selector with a pseudoelement', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('.container::before', [
+#                new ast.Property('content', [
+#                    new ast.Literal('""')
+#                ])
+#                new ast.Property('display', [
+#                    new ast.Literal('block')
+#                ])
+#                new ast.Property('background-color', [
+#                    new ast.Literal('#141414')
+#                ])
+            ])
+        ]
+        css = ".container::before {
         }"
         assert.deepEqual parser.parse(css), styleSheet

@@ -74,4 +74,3 @@ value:
 string:
   STRING
 ;
-

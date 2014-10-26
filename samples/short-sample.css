@@ -13,6 +13,7 @@ p {
     font-weight: normal
 }
 /*
+
 this should compile to the following:
 
 p {
@@ -21,6 +22,6 @@ p {
     font-weight: normal
 }
 ol {
-    list-style: none;
+    list-style: none
 }
 */
