@@ -31,7 +31,6 @@ rule:
 selectors:
   selector                         { $$ =  $1 }
 | selectors selector               { $$ = [$1, $2].join(' ') }
-| selectors                        { $$ = $1 }
 ;
 
 selector:
