@@ -214,3 +214,99 @@ describe 'Generate an Abstract Syntax Tree', ->
             background-color: #141414
         }'
         assert.deepEqual parser.parse(css), styleSheet
+
+
+    xit 'parses exact attribute match', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('input[type="text"]', [
+                new ast.Property('background-color', [
+                    new ast.Literal('#444')
+                ])
+                new ast.Property('width', [
+                    new ast.Literal('200px')
+                ])
+            ])
+        ]
+        css = 'input[type="text"] {
+            background-color: #444;
+            width: 200px;
+        }'
+        assert.deepEqual parser.parse(css), styleSheet
+
+    xit 'parses attribute contains', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('div[id*="post"]', [
+                new ast.Property('color', [
+                    new ast.Literal('red')
+                ])
+            ])
+        ]
+        css = 'div[id*="post"] {
+            color: red;
+        }'
+        assert.deepEqual parser.parse(css), styleSheet
+
+    xit 'parses attribute begins', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('h1[rel^="external"]', [
+                new ast.Property('color', [
+                    new ast.Literal('red')
+                ])
+            ])
+        ]
+        css = 'h1[rel^="external"] {
+            color: red;
+        }'
+        assert.deepEqual parser.parse(css), styleSheet
+
+    xit 'parses attribute ends', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('h1[rel$="external"]', [
+                new ast.Property('color', [
+                    new ast.Literal('red')
+                ])
+            ])
+        ]
+        css = 'h1[rel$="external"] {
+            color: red;
+        }'
+        assert.deepEqual parser.parse(css), styleSheet
+
+    xit 'parses attribute space delimited list contains', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('h1[rel~="external"]', [
+                new ast.Property('color', [
+                    new ast.Literal('red')
+                ])
+            ])
+        ]
+        css = 'h1[rel~="external"] {
+            color: red;
+        }'
+        assert.deepEqual parser.parse(css), styleSheet
+
+    xit 'parses attribute hash delimited list contains', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('h1[rel|="friend"]', [
+                new ast.Property('color', [
+                    new ast.Literal('red')
+                ])
+            ])
+        ]
+        css = 'h1[rel|="friend"] {
+            color: red;
+        }'
+        assert.deepEqual parser.parse(css), styleSheet
+
+    xit 'parses multiple attributes', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('h1[rel="handsome"][title^="Important"]', [
+                new ast.Property('color', [
+                    new ast.Literal('red')
+                ])
+            ])
+        ]
+        css = 'h1[rel="handsome"][title^="Important"] {
+            color: red;
+        }'
+        assert.deepEqual parser.parse(css), styleSheet
