@@ -257,6 +257,7 @@ describe 'Generate an Abstract Syntax Tree', ->
         css = 'h1[rel^="external"] {
             color: red;
         }'
+
         assert.deepEqual parser.parse(css), styleSheet
 
     xit 'parses attribute ends', ->
@@ -283,6 +284,7 @@ describe 'Generate an Abstract Syntax Tree', ->
         css = 'h1[rel~="external"] {
             color: red;
         }'
+
         assert.deepEqual parser.parse(css), styleSheet
 
     xit 'parses attribute hash delimited list contains', ->
@@ -296,6 +298,7 @@ describe 'Generate an Abstract Syntax Tree', ->
         css = 'h1[rel|="friend"] {
             color: red;
         }'
+
         assert.deepEqual parser.parse(css), styleSheet
 
     xit 'parses multiple attributes', ->
@@ -309,4 +312,6 @@ describe 'Generate an Abstract Syntax Tree', ->
         css = 'h1[rel="handsome"][title^="Important"] {
             color: red;
         }'
+
         assert.deepEqual parser.parse(css), styleSheet
+
