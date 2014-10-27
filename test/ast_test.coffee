@@ -197,17 +197,20 @@ describe 'Generate an Abstract Syntax Tree', ->
     it 'parses a selector with a pseudoelement', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('.container::before', [
-#                new ast.Property('content', [
-#                    new ast.Literal('""')
-#                ])
-#                new ast.Property('display', [
-#                    new ast.Literal('block')
-#                ])
-#                new ast.Property('background-color', [
-#                    new ast.Literal('#141414')
-#                ])
+                new ast.Property('content', [
+                    new ast.Literal('""')
+                ])
+                new ast.Property('display', [
+                    new ast.Literal('block')
+                ])
+                new ast.Property('background-color', [
+                    new ast.Literal('#141414')
+                ])
             ])
         ]
-        css = ".container::before {
-        }"
+        css = '.container::before {
+            content: "";
+            display: block;
+            background-color: #141414
+        }'
         assert.deepEqual parser.parse(css), styleSheet
