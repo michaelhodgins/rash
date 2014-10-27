@@ -112,3 +112,54 @@ describe 'Output valid CSS', ->
         }'
         rashedCode = '.container::before {content: "";display: block;background-color: #141414}'
         assert.equal parser.parse(code).toCSS(), rashedCode
+
+    xit 'compiles exact attribute match', ->
+        code = 'input[type="text"] {
+            background-color: #444;
+            width: 200px;
+        }'
+        rashedCode = 'input[type="text"] {background-color: #444;width: 200px}'
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
+    xit 'compiles attribute contains', ->
+        code = 'div[id*="post"] {
+            color: red;
+        }'
+        rashedCode = 'div[id*="post"] {color: red}'
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
+    xit 'compiles attribute begins', ->
+        code = 'h1[rel^="external"] {
+            color: red;
+        }'
+        rashedCode = 'h1[rel^="external"] {color: red}'
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
+    xit 'compiles attribute ends', ->
+        code = 'h1[rel$="external"] {
+            color: red;
+        }'
+        rashedCode = 'h1[rel$="external"] {color: red}'
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
+    xit 'compiles attribute space delimited list contains', ->
+        code = 'h1[rel~="external"] {
+            color: red;
+        }'
+        rashedCode = 'h1[rel~="external"] {color: red}'
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
+    xit 'compiles attribute hash delimited list contains', ->
+        code = 'h1[rel|="friend"] {
+            color: red;
+        }'
+        rashedCode = 'h1[rel|="friend"] {color: red}'
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
+    xit 'compiles multiple attributes', ->
+        code = 'h1[rel="handsome"][title^="Important"] {
+            color: red;
+        }'
+        rashedCode = 'h1[rel="handsome"][title^="Important"] {color: red}'
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
