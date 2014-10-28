@@ -117,6 +117,19 @@ describe 'Generate an Abstract Syntax Tree', ->
         }"
         assert.deepEqual parser.parse(css), styleSheet
 
+    it 'parses a rule with a multiple compound selectors', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('p.well.standout', [
+                new ast.Property('font-size', [
+                    new ast.Literal('36px')
+                ])
+            ])
+        ]
+        css = "p.well.standout {
+            font-size: 36px
+        }"
+        assert.deepEqual parser.parse(css), styleSheet
+
     it 'parses a rule with a nested compound selector', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p.well strong', [
@@ -216,7 +229,7 @@ describe 'Generate an Abstract Syntax Tree', ->
         assert.deepEqual parser.parse(css), styleSheet
 
 
-    xit 'parses exact attribute match', ->
+    it 'parses exact attribute match', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('input[type="text"]', [
                 new ast.Property('background-color', [
@@ -233,7 +246,7 @@ describe 'Generate an Abstract Syntax Tree', ->
         }'
         assert.deepEqual parser.parse(css), styleSheet
 
-    xit 'parses attribute contains', ->
+    it 'parses attribute contains', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('div[id*="post"]', [
                 new ast.Property('color', [
@@ -246,7 +259,7 @@ describe 'Generate an Abstract Syntax Tree', ->
         }'
         assert.deepEqual parser.parse(css), styleSheet
 
-    xit 'parses attribute begins', ->
+    it 'parses attribute begins', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('h1[rel^="external"]', [
                 new ast.Property('color', [
@@ -260,7 +273,7 @@ describe 'Generate an Abstract Syntax Tree', ->
 
         assert.deepEqual parser.parse(css), styleSheet
 
-    xit 'parses attribute ends', ->
+    it 'parses attribute ends', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('h1[rel$="external"]', [
                 new ast.Property('color', [
@@ -273,7 +286,7 @@ describe 'Generate an Abstract Syntax Tree', ->
         }'
         assert.deepEqual parser.parse(css), styleSheet
 
-    xit 'parses attribute space delimited list contains', ->
+    it 'parses attribute space delimited list contains', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('h1[rel~="external"]', [
                 new ast.Property('color', [
@@ -287,7 +300,7 @@ describe 'Generate an Abstract Syntax Tree', ->
 
         assert.deepEqual parser.parse(css), styleSheet
 
-    xit 'parses attribute hash delimited list contains', ->
+    it 'parses attribute hash delimited list contains', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('h1[rel|="friend"]', [
                 new ast.Property('color', [
@@ -301,7 +314,7 @@ describe 'Generate an Abstract Syntax Tree', ->
 
         assert.deepEqual parser.parse(css), styleSheet
 
-    xit 'parses multiple attributes', ->
+    it 'parses multiple attributes', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('h1[rel="handsome"][title^="Important"]', [
                 new ast.Property('color', [
@@ -310,6 +323,20 @@ describe 'Generate an Abstract Syntax Tree', ->
             ])
         ]
         css = 'h1[rel="handsome"][title^="Important"] {
+            color: red;
+        }'
+
+        assert.deepEqual parser.parse(css), styleSheet
+
+    xit 'parses attributes with classes', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('h1[rel|="friend"].well', [
+                new ast.Property('color', [
+                    new ast.Literal('red')
+                ])
+            ])
+        ]
+        css = 'h1[rel|="friend"].well {
             color: red;
         }'
 
