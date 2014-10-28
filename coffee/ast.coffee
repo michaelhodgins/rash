@@ -12,6 +12,11 @@ class StyleSheet
     rash: ->
         @
 
+class MediaQuery
+    constructor: (@query, @rules) ->
+
+    toCSS: ->
+
 ###
 Represents a single CSS rule, consisting on a selector and one or more properties.
 ###
@@ -62,6 +67,7 @@ class Literal
 
 # export the classes
 exports.StyleSheet = StyleSheet
+exports.MediaQuery = MediaQuery
 exports.Rule = Rule
 exports.Property = Property
 exports.Literal = Literal

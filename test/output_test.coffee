@@ -176,3 +176,12 @@ describe 'Output valid CSS', ->
         }'
         rashedCode = 'h1[rel|="friend"].well em {color: red}'
         assert.equal parser.parse(code).toCSS(), rashedCode
+
+    xit 'compiles media queries', ->
+        code = '@media screen and (min-width: 400px) and (max-width: 700px) {
+                h1 {
+                    font-size: 12px;
+                }
+            }'
+        rashedCode = '@media screen and (min-width: 400px) and (max-width: 700px) {h1 {font-size: 12px}}'
+        assert.equal parser.parse(code).toCSS(), rashedCode

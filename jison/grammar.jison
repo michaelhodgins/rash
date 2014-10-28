@@ -16,7 +16,21 @@
 
 // Parsing starts here.
 stylesheet:
-  rules EOF                         { return new ast.StyleSheet($1) }
+  sections EOF                   { return new ast.StyleSheet($1) }
+;
+
+sections:
+  section                           { $$ = $1 }
+| sections section                  { $$ = $1.concat($2) }
+;
+
+section:
+  media_query                       { $$ = [ $1 ] }
+| rules                             { $$ = $1 }
+;
+
+media_query:
+  MEDIA_QUERY '{' rules '}'         { $$ = new ast.MediaQuery($1.trim(), $3) }
 ;
 
 rules:

@@ -17,6 +17,8 @@ SIBLING							'~'							// matches ~, the sibling combinator
 ADJACENT						'+'							// matches +, the adjacent combinator
 ATTRIBUTE                       ([\[]{NAME}([\*\^\$~\|]?[=]?({NAME}|{STRING}))[\]])+
                                                             // matches attribute selectors
+
+MEDIA_QUERY                     '@media' ([^@{]+)
 %%
 
 //// Rules
@@ -30,6 +32,9 @@ ATTRIBUTE                       ([\[]{NAME}([\*\^\$~\|]?[=]?({NAME}|{STRING}))[\
 
 // strings
 {STRING}						return 'STRING';        	// "blah", 'blah'
+
+// media queries
+{MEDIA_QUERY}                   return 'MEDIA_QUERY';       //@media screen and (min-width: 400px) and (max-width: 700px)
 
 // Selectors
 {UNIVERSAL}						return 'SELECTOR';      	// *

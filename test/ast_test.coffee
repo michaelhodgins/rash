@@ -355,3 +355,22 @@ describe 'Generate an Abstract Syntax Tree', ->
         }'
 
         assert.deepEqual parser.parse(css), styleSheet
+
+    it 'parses media queries', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.MediaQuery('@media screen and (min-width: 400px) and (max-width: 700px)', [
+                new ast.Rule('h1', [
+                    new ast.Property('font-size', [
+                        new ast.Literal('12px')
+                    ])
+                ])
+            ])
+        ]
+        css = '@media screen and (min-width: 400px) and (max-width: 700px) {
+                h1 {
+                    font-size: 12px;
+                }
+            }'
+
+        assert.deepEqual parser.parse(css), styleSheet
+
