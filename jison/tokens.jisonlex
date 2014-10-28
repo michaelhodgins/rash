@@ -1,15 +1,6 @@
 //// Macros
 DIGIT                           [0-9]
 NUMBER                          {DIGIT}+(\.{DIGIT}+)?   	// matches: 10 and 3.14
-NAME                            [a-zA-Z][\w\-]*         	// matches: body, background-color, auto and myClassName
-SELECTOR                        ((\.|\#|\:\:|\:){NAME})+   	// matches: #id, .class, :hover and ::before
-UNIVERSAL						'*'							// matches *, the univeral selector
-CHILD							'>'							// matches >, the child combinator
-SIBLING							'~'							// matches ~, the sibling combinator
-ADJACENT						'+'							// matches +, the adjacent combinator
-//ATTRIBUTE                       ([\[][a-zA-Z]+([\*\^\$~\|]?[=]?["]?[a-zA-Z]+["]?)[\]])+
-ATTRIBUTE                       ([\[][a-zA-Z]+([\*\^\$~\|]?[=]?["]?([^\n\r\f\\"]| '\\' {NL}|{ESCAPE})*["]?)[\]])+
-                                                            // matches attribute selectors
 
 UNICODE							'\\' [0-9a-f]{1,6}(\r\n|[\n\r\t\f])?
 ESCAPE							{UNICODE}|'\\'[^\n\r\f0-9a-f]
@@ -17,6 +8,15 @@ NL								\n|\r\n|\r|\f
 DOUBLE_QUOTE_STRING				'"' ([^\n\r\f\\"]| '\\' {NL}|{ESCAPE})* '"'
 SINGLE_QUOTE_STRING				"'" ([^\n\r\f\\']| "\\" {NL}|{ESCAPE})* "'"
 STRING							{DOUBLE_QUOTE_STRING}|{SINGLE_QUOTE_STRING}
+
+NAME                            [a-zA-Z][\w\-]*         	// matches: body, background-color, auto and myClassName
+SELECTOR                        ((\.|\#|\:\:|\:){NAME})+   	// matches: #id, .class, :hover and ::before
+UNIVERSAL						'*'							// matches *, the univeral selector
+CHILD							'>'							// matches >, the child combinator
+SIBLING							'~'							// matches ~, the sibling combinator
+ADJACENT						'+'							// matches +, the adjacent combinator
+ATTRIBUTE                       ([\[]{NAME}([\*\^\$~\|]?[=]?({NAME}|{STRING}))[\]])+
+                                                            // matches attribute selectors
 %%
 
 //// Rules
