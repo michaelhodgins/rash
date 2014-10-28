@@ -10,6 +10,29 @@ class StyleSheet
         .join  "\n"
 
     rash: ->
+        # loop over each rule in the stylesheet
+        #TODO at the moment, we're ignoring media queries
+        numRules = @rules.length
+        position = 0
+        while position < numRules
+            rule = @rules[position] #this is the rule we're working on
+
+            # loop over all the rules further down the stylesheet, looks to see this this rule can be merged.
+            subsequentPosition = position + 1
+            while subsequentPosition < numRules
+                subsequentRule = @rules[subsequentPosition]
+                #see if the rule further down the list has the same selector
+                if subsequentRule.selector is rule.selector
+                    # the selector matches, so the current rule can be pushed down the stylesheet
+                    subsequentRule.merge rule
+                    # we need to remove the current rule from the AST
+                    @rules.splice(position, position+1)
+                    numRules-- # we have one less rule
+                    break #the current rule has been removed, so break out of the inner loop
+                #move the inner loop onto the next subsequent rule
+                subsequentPosition++
+            #move the outer loop onto the next rule
+            position++
         @
 
 ###
@@ -35,6 +58,18 @@ class Rule
             property.toCSS()
         .join ";"
         "#{@selector} {#{properties}}"
+
+    merge: (rule) ->
+        for property in rule.properties
+            @properties.unshift(property) if not @hasProperty(property)
+
+    ###
+    Returns true if the given property already has a value in this rule.
+    ###
+    hasProperty: (property) ->
+        for existingProperty in @properties
+            return true if existingProperty.name is property.name
+        false
 
 ###
 Represents a single CSS property, consisting of a style name, and one or more values.

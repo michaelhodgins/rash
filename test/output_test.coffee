@@ -185,3 +185,24 @@ describe 'Output valid CSS', ->
             }'
         rashedCode = '@media screen and (min-width: 400px) and (max-width: 700px) {h1 {font-size: 12px}}'
         assert.equal parser.parse(code).toCSS(), rashedCode
+
+    it 'compiles two rationalized selectors', ->
+        code = 'p {
+            font-size: 12px
+        }
+        p {
+            color: #030303
+        }'
+        rashedCode = 'p {font-size: 12px;color: #030303}'
+        assert.equal parser.parse(code).rash().toCSS(), rashedCode
+
+    it 'compiles two rationalized selectors with a duplicated property', ->
+        code = 'p {
+            font-size: 12px;
+            color: #666
+        }
+        p {
+            color: #030303
+        }'
+        rashedCode = 'p {font-size: 12px;color: #030303}'
+        assert.equal parser.parse(code).rash().toCSS(), rashedCode

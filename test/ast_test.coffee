@@ -374,3 +374,41 @@ describe 'Generate an Abstract Syntax Tree', ->
 
         assert.deepEqual parser.parse(css), styleSheet
 
+    it 'rationalizes two selectors', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('p', [
+                new ast.Property('font-size', [
+                    new ast.Literal('12px')
+                ])
+                new ast.Property('color', [
+                    new ast.Literal('#030303')
+                ])
+            ])
+        ]
+        css = "p {
+            font-size: 12px
+        }
+        p {
+            color: #030303
+        }"
+        assert.deepEqual parser.parse(css).rash(), styleSheet
+
+    it 'rationalizes two selectors with redundant property', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('p', [
+                new ast.Property('font-size', [
+                    new ast.Literal('12px')
+                ])
+                new ast.Property('color', [
+                    new ast.Literal('#030303')
+                ])
+            ])
+        ]
+        css = "p {
+            font-size: 12px;
+            color: #666
+        }
+        p {
+            color: #030303
+        }"
+        assert.deepEqual parser.parse(css).rash(), styleSheet

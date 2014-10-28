@@ -24,6 +24,7 @@
     "coffee-script": "^1.8.0",
     "jison": "^0.4.15",
     "mocha": "^1.21.5",
+    "mocha-clean": "^0.3.0",
     "nodemon": "^1.2.1"
   }
 }
