@@ -102,3 +102,13 @@ h1[rel|="friend"] {
 h1[rel="handsome"][title^="Important"] {
     color: red;
 }
+
+/* attribute with class */
+h1[rel|="friend"].well {
+    color: red;
+}
+
+/* attribute with class, and nested selector */
+h1[rel|="friend"].well em {
+    color: red;
+}

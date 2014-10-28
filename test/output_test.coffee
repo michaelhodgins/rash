@@ -163,3 +163,16 @@ describe 'Output valid CSS', ->
         rashedCode = 'h1[rel="handsome"][title^="Important"] {color: red}'
         assert.equal parser.parse(code).toCSS(), rashedCode
 
+    it 'compiles attributes with classes', ->
+        code = 'h1[rel|="friend"].well {
+            color: red;
+        }'
+        rashedCode = 'h1[rel|="friend"].well {color: red}'
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
+    it 'compiles attributes with classes and nested selectors', ->
+        code = 'h1[rel|="friend"].well em {
+            color: red;
+        }'
+        rashedCode = 'h1[rel|="friend"].well em {color: red}'
+        assert.equal parser.parse(code).toCSS(), rashedCode

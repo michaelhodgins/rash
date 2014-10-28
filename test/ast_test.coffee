@@ -328,7 +328,7 @@ describe 'Generate an Abstract Syntax Tree', ->
 
         assert.deepEqual parser.parse(css), styleSheet
 
-    xit 'parses attributes with classes', ->
+    it 'parses attributes with classes', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('h1[rel|="friend"].well', [
                 new ast.Property('color', [
@@ -342,3 +342,16 @@ describe 'Generate an Abstract Syntax Tree', ->
 
         assert.deepEqual parser.parse(css), styleSheet
 
+    it 'parses attributes with classes and nested selectors', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('h1[rel|="friend"].well em', [
+                new ast.Property('color', [
+                    new ast.Literal('red')
+                ])
+            ])
+        ]
+        css = 'h1[rel|="friend"].well em {
+            color: red;
+        }'
+
+        assert.deepEqual parser.parse(css), styleSheet

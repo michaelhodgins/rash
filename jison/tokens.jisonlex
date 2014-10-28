@@ -35,8 +35,8 @@ STRING							{DOUBLE_QUOTE_STRING}|{SINGLE_QUOTE_STRING}
 {UNIVERSAL}						return 'SELECTOR';      	// *
 {SELECTOR}                      return 'SELECTOR';      	// .class, #id
 {NAME}{SELECTOR}                return 'SELECTOR';      	// div.class, body#id
-{NAME}{ATTRIBUTE}               return 'SELECTOR';      	// div[rel=external]
 {NAME}{ATTRIBUTE}{SELECTOR}     return 'SELECTOR';      	// div[rel=external].class
+{NAME}{ATTRIBUTE}               return 'SELECTOR';      	// div[rel=external]
 {CHILD}                			return 'SELECTOR';      	// >
 {SIBLING}                		return 'SELECTOR';      	// ~
 {ADJACENT}                		return 'SELECTOR';      	// +
