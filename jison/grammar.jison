@@ -16,7 +16,7 @@
 
 // Parsing starts here.
 stylesheet:
-  sections EOF                   { return new ast.StyleSheet($1) }
+  sections EOF                      { return new ast.StyleSheet($1) }
 ;
 
 sections:
@@ -26,7 +26,7 @@ sections:
 
 section:
   media_query                       { $$ = [ $1 ] }
-| rules                             { $$ = $1 }
+| rule                              { $$ = [ $1 ] }
 ;
 
 media_query:

@@ -12,10 +12,17 @@ class StyleSheet
     rash: ->
         @
 
+###
+Represents a media query section.
+###
 class MediaQuery
     constructor: (@query, @rules) ->
 
     toCSS: ->
+        rules = @rules.map (rule) ->
+            rule.toCSS()
+        .join  "\n"
+        "#{@query} {#{rules}}"
 
 ###
 Represents a single CSS rule, consisting on a selector and one or more properties.
