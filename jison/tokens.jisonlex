@@ -9,7 +9,7 @@ DOUBLE_QUOTE_STRING				'"' ([^\n\r\f\\"]| '\\' {NL}|{ESCAPE})* '"'
 SINGLE_QUOTE_STRING				"'" ([^\n\r\f\\']| "\\" {NL}|{ESCAPE})* "'"
 STRING							{DOUBLE_QUOTE_STRING}|{SINGLE_QUOTE_STRING}
 
-NAME                            [a-zA-Z][\w\-]*         	// matches: body, background-color, auto and myClassName
+NAME                            [-a-zA-Z][\w\-]*         	// matches: body, background-color, auto and myClassName
 SELECTOR                        ((\.|\#|\:\:|\:){NAME})+   	// matches: #id, .class, :hover and ::before
 UNIVERSAL						'*'							// matches *, the univeral selector
 CHILD							'>'							// matches >, the child combinator
