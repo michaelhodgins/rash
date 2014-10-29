@@ -3,3 +3,16 @@
         font-size: 12px;
     }
 }
+@media screen and (min-width: 600px) and (max-width: 800px) {
+    p {
+        font-size: 15px;
+    }
+}
+@media screen and (min-width: 400px) and (max-width: 700px) {
+    h1 {
+        font-size: 11px;
+    }
+    a {
+        color: white
+    }
+}

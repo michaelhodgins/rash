@@ -412,3 +412,60 @@ describe 'Generate an Abstract Syntax Tree', ->
             color: #030303
         }"
         assert.deepEqual parser.parse(css).rash(), styleSheet
+
+    it 'rationalizes two media queries', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.MediaQuery('@media screen and (min-width: 400px) and (max-width: 700px)', [
+                new ast.Rule('h1', [
+                    new ast.Property('font-size', [
+                        new ast.Literal('12px')
+                    ])
+                ])
+                new ast.Rule('a', [
+                    new ast.Property('color', [
+                        new ast.Literal('white')
+                    ])
+                ])
+            ])
+        ]
+        css = '@media screen and (min-width: 400px) and (max-width: 700px) {
+            h1 {
+                font-size: 12px;
+            }
+        }
+        @media screen and (min-width: 400px) and (max-width: 700px) {
+            a {
+                color: white
+            }
+        }'
+        assert.deepEqual parser.parse(css).rash(), styleSheet
+
+    it 'rationalizes two media queries and rules', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.MediaQuery('@media screen and (min-width: 400px) and (max-width: 700px)', [
+                new ast.Rule('h1', [
+                    new ast.Property('font-size', [
+                        new ast.Literal('11px')
+                    ])
+                ])
+                new ast.Rule('a', [
+                    new ast.Property('color', [
+                        new ast.Literal('white')
+                    ])
+                ])
+            ])
+        ]
+        css = '@media screen and (min-width: 400px) and (max-width: 700px) {
+            h1 {
+                font-size: 12px;
+            }
+        }
+        @media screen and (min-width: 400px) and (max-width: 700px) {
+            h1 {
+                font-size: 11px;
+            }
+            a {
+                color: white
+            }
+        }'
+        assert.deepEqual parser.parse(css).rash(), styleSheet

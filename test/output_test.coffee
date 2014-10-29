@@ -206,3 +206,35 @@ describe 'Output valid CSS', ->
         }'
         rashedCode = 'p {font-size: 12px;color: #030303}'
         assert.equal parser.parse(code).rash().toCSS(), rashedCode
+
+    it 'compiles two rationalized media queries', ->
+        code = '@media screen and (min-width: 400px) and (max-width: 700px) {
+            h1 {
+                font-size: 12px;
+            }
+        }
+        @media screen and (min-width: 400px) and (max-width: 700px) {
+            a {
+                color: white
+            }
+        }'
+        rashedCode = "@media screen and (min-width: 400px) and (max-width: 700px) {h1 {font-size: 12px}\na {color: white}}"
+        assert.equal parser.parse(code).rash().toCSS(), rashedCode
+
+    it 'compiles two rationalized media queries and rules', ->
+        code = '@media screen and (min-width: 400px) and (max-width: 700px) {
+            h1 {
+                font-size: 12px;
+            }
+        }
+        @media screen and (min-width: 400px) and (max-width: 700px) {
+            h1 {
+                font-size: 11px;
+            }
+            a {
+                color: white
+            }
+        }'
+        rashedCode = "@media screen and (min-width: 400px) and (max-width: 700px) {h1 {font-size: 11px}\na {color: white}}"
+        assert.equal parser.parse(code).rash().toCSS(), rashedCode
+
