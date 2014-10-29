@@ -10,7 +10,9 @@ SINGLE_QUOTE_STRING				"'" ([^\n\r\f\\']| "\\" {NL}|{ESCAPE})* "'"
 STRING							{DOUBLE_QUOTE_STRING}|{SINGLE_QUOTE_STRING}
 
 NAME                            [-a-zA-Z][\w\-]*         	// matches: body, background-color, auto and myClassName
-SELECTOR                        ((\.|\#|\:\:|\:){NAME})+   	// matches: #id, .class, :hover and ::before
+BRACKET_NAME                    [-a-zA-Z][\w\-\(\)\[\]]*    // matches p:nth-child(odd), audio:not([controls]), etc
+SELECTOR                        ((\.|\#|\:\:|\:){BRACKET_NAME})+
+                                                            // matches: #id, .class, :hover and ::before
 UNIVERSAL						'*'							// matches *, the univeral selector
 CHILD							'>'							// matches >, the child combinator
 SIBLING							'~'							// matches ~, the sibling combinator
@@ -44,6 +46,7 @@ IMPORTANT                       '!' [iI][mM][pP][oO][rR][tT][aA][nN][tT]
 {NAME}{SELECTOR}                return 'SELECTOR';      	// div.class, body#id
 {NAME}{ATTRIBUTE}{SELECTOR}     return 'SELECTOR';      	// div[rel=external].class
 {NAME}{ATTRIBUTE}               return 'SELECTOR';      	// div[rel=external]
+{ATTRIBUTE}                     return 'SELECTOR';      	// div[rel=external]
 {CHILD}                			return 'SELECTOR';      	// >
 {SIBLING}                		return 'SELECTOR';      	// ~
 {ADJACENT}                		return 'SELECTOR';      	// +
