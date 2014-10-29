@@ -19,6 +19,8 @@ ATTRIBUTE                       ([\[]{NAME}([\*\^\$~\|]?[=]?({NAME}|{STRING}))[\
                                                             // matches attribute selectors
 
 MEDIA_QUERY                     '@media' ([^@{]+)
+IMPORTANT                       '!' [iI][mM][pP][oO][rR][tT][aA][nN][tT]
+                                                            // matches !important (case-insensitive - there has to be a better way)
 %%
 
 //// Rules
@@ -47,6 +49,7 @@ MEDIA_QUERY                     '@media' ([^@{]+)
 {ADJACENT}                		return 'SELECTOR';      	// +
 
 {NAME}                          return 'IDENTIFIER';    	// body, font-size
+{IMPORTANT}                     return 'IMPORTANT';
 
 .                               return yytext;          	// {, }, +, :, ;
 

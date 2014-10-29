@@ -123,18 +123,17 @@ class Rule
 Represents a single CSS property, consisting of a style name, and one or more values.
 ###
 class Property
-    constructor: (@name, @values) ->
+    constructor: (@name, @values, @important = false) ->
 
     toCSS: ->
         if @values instanceof Array
             values = @values.map (value) ->
                 value.toCSS()
             .join " "
-            "#{@name}: #{values}"
         else
             values = @values.toCSS()
+        "#{@name}: #{values}#{if @important then ' !important' else ''}"
 
-        "#{@name}: #{values}"
 ###
 Represents a comma separated list of values.
 ###

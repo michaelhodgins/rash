@@ -22,6 +22,13 @@ describe 'Output valid CSS', ->
         rashedCode = "p {font-size: 12px}"
         assert.equal parser.parse(code).toCSS(), rashedCode
 
+    it 'compiles one rule with an important property', ->
+        code = "p{
+            font-size: 12px !important
+        }"
+        rashedCode = "p {font-size: 12px !important}"
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
     it 'compiles one rule with two properties - double quoted string', ->
         code = """p {
             font-size: 12px;

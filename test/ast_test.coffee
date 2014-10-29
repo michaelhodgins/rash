@@ -29,6 +29,19 @@ describe 'Generate an Abstract Syntax Tree', ->
         }"
         assert.deepEqual parser.parse(css), styleSheet
 
+    it 'parses a rule with an important property', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('p', [
+                new ast.Property('font-size', [
+                    new ast.Literal('12px')
+                ], true)
+            ])
+        ]
+        css = "p{
+            font-size: 12px !important
+        }"
+        assert.deepEqual parser.parse(css), styleSheet
+
     it 'parses a rule with a property and an empty property', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [

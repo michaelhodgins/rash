@@ -66,6 +66,7 @@ properties:
 
 property:
   IDENTIFIER ':' values             { $$ = new ast.Property($1, $3) }
+| IDENTIFIER ':' values IMPORTANT   { $$ = new ast.Property($1, $3, true) }
 ;
 
 
