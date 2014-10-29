@@ -74,6 +74,12 @@ describe 'Output valid CSS', ->
         rashedCode = "p.well strong {font-weight: 600}"
         assert.equal parser.parse(code).toCSS(), rashedCode
 
+    it 'compiles a rule with a list of selectors', ->
+        code = '#block-search-form .form-submit, .page-search .search-form input.form-submit, .page-taxonomy-term .search-form input.form-submit {
+            background-color: #060608;
+            color: #eae827;
+            border: none
+        }'
     it 'compiles a child combinator', ->
         code = "#container > .box {
            float: left;

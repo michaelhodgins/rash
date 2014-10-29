@@ -147,6 +147,27 @@ describe 'Generate an Abstract Syntax Tree', ->
         }"
         assert.deepEqual parser.parse(css), styleSheet
 
+    it 'parses a rule with a list of selectors', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('#block-search-form .form-submit, .page-search .search-form input.form-submit, .page-taxonomy-term .search-form input.form-submit', [
+                new ast.Property('background-color', [
+                    new ast.Literal('#060608')
+                ])
+                new ast.Property('color', [
+                    new ast.Literal('#eae827')
+                ])
+                new ast.Property('border', [
+                    new ast.Literal('none')
+                ])
+            ])
+        ]
+        css = '#block-search-form .form-submit, .page-search .search-form input.form-submit, .page-taxonomy-term .search-form input.form-submit {
+            background-color: #060608;
+            color: #eae827;
+            border: none
+        }'
+        assert.deepEqual parser.parse(css), styleSheet
+
     it 'parses a selector with the child combinator', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('#container > .box', [

@@ -39,7 +39,12 @@ rules:
 ;
 
 rule:
-  selectors '{' properties '}'     { $$ = new ast.Rule($1, $3) }
+  selectorList '{' properties '}'   { $$ = new ast.Rule($1, $3) }
+;
+
+selectorList:
+  selectors                        { $$ = $1 }
+| selectorList ',' selectors       { $$ = [$1, $3].join(', ') }
 ;
 
 selectors:
