@@ -10,8 +10,8 @@ DOUBLE_QUOTE_STRING				'"' ([^\n\r\f\\"]| '\\' {NL}|{ESCAPE})* '"'
 SINGLE_QUOTE_STRING				"'" ([^\n\r\f\\']| "\\" {NL}|{ESCAPE})* "'"
 STRING							{DOUBLE_QUOTE_STRING}|{SINGLE_QUOTE_STRING}
 
-NAME                            [-a-zA-Z][\w\-]*         	// matches: body, background-color, auto and myClassName
-BRACKET_NAME                    [-a-zA-Z][\w\-\(\)\[\]]*    // matches p:nth-child(odd), audio:not([controls]), etc
+NAME                            [-a-zA-Z][-\w]*         	// matches: body, background-color, auto and myClassName
+BRACKET_NAME                    [-a-zA-Z][-\w\(\)\[\]]*    // matches p:nth-child(odd), audio:not([controls]), etc
 SELECTOR                        ((\.|\#|\:\:|\:){BRACKET_NAME})+
                                                             // matches: #id, .class, :hover and ::before
 UNIVERSAL						'*'							// matches *, the univeral selector
