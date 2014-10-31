@@ -146,6 +146,15 @@ class ValueList
         .join(',')
 
 ###
+Represents a css function with a comma separated list of arguments.
+###
+class Function
+    constructor: (@name, @values) ->
+
+    toCSS: ->
+        ''
+
+###
 Represents a literal value.
 ###
 class Literal
@@ -159,5 +168,6 @@ exports.StyleSheet = StyleSheet
 exports.MediaQuery = MediaQuery
 exports.Rule = Rule
 exports.Property = Property
+exports.Function = Function
 exports.Literal = Literal
 exports.ValueList = ValueList

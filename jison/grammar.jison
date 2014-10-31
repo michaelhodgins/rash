@@ -30,7 +30,7 @@ section:
 ;
 
 media_query:
-  MEDIA_QUERY '{' rules '}'         { $$ = new ast.MediaQuery($1.trim(), $3) }
+  MEDIA_QUERY LBRACE rules RBRACE         { $$ = new ast.MediaQuery($1.trim(), $3) }
 ;
 
 rules:
@@ -39,12 +39,12 @@ rules:
 ;
 
 rule:
-  selectorList '{' properties '}'   { $$ = new ast.Rule($1, $3) }
+  selectorList LBRACE properties RBRACE   { $$ = new ast.Rule($1, $3) }
 ;
 
 selectorList:
   selectors                        { $$ = $1 }
-| selectorList ',' selectors       { $$ = [$1, $3].join(', ') }
+| selectorList COMMA selectors       { $$ = [$1, $3].join(', ') }
 ;
 
 selectors:
@@ -60,13 +60,13 @@ selector:
 properties:
   /* empty */                       { $$ = [] }
 | property                          { $$ = [ $1 ] }
-| properties ';' property           { $$ = $1.concat($3) }
-| properties ';'                    { $$ = $1 }
+| properties SEMICOLON property           { $$ = $1.concat($3) }
+| properties SEMICOLON                    { $$ = $1 }
 ;
 
 property:
-  IDENTIFIER ':' values             { $$ = new ast.Property($1, $3) }
-| IDENTIFIER ':' values IMPORTANT   { $$ = new ast.Property($1, $3, true) }
+  IDENTIFIER COLON values             { $$ = new ast.Property($1, $3) }
+| IDENTIFIER COLON values IMPORTANT   { $$ = new ast.Property($1, $3, true) }
 ;
 
 
@@ -77,12 +77,13 @@ values:
 ;
 
 valueList:
-  value ',' valueList               { $$ = [ $1 ].concat($3) }
-| value ',' value                   { $$ = [$1, $3] }}
+  value COMMA valueList               { $$ = [ $1 ].concat($3) }
+| value COMMA value                   { $$ = [$1, $3] }}
 ;
 
 value:
-  IDENTIFIER                        { $$ = new ast.Literal($1) }
+  IDENTIFIER LPAREN valueList RPAREN            { $$ = new ast.Function($1, $3) }
+| IDENTIFIER                        { $$ = new ast.Literal($1) }
 | COLOR                             { $$ = new ast.Literal($1) }
 | NUMBER                            { $$ = new ast.Literal($1) }
 | DIMENSION                         { $$ = new ast.Literal($1) }
@@ -92,4 +93,7 @@ value:
 
 string:
   STRING
+;
+
+functionParams:
 ;

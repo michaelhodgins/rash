@@ -24,6 +24,15 @@ ATTRIBUTE                       ([\[]{NAME}([\*\^\$~\|]?[=]?({NAME}|{STRING}))[\
 MEDIA_QUERY                     '@media' ([^@{]+)
 IMPORTANT                       '!' [iI][mM][pP][oO][rR][tT][aA][nN][tT]
                                                             // matches !important (case-insensitive - there has to be a better way)
+
+LPAREN                          '('
+RPAREN                          ')'
+COMMA                           ','
+SEMICOLON                       ';'
+COLON                           ':'
+LBRACE                          '{'
+RBRACE                          '}'
+
 %%
 
 //// Rules
@@ -54,6 +63,14 @@ IMPORTANT                       '!' [iI][mM][pP][oO][rR][tT][aA][nN][tT]
 
 {NAME}                                  return 'IDENTIFIER';    	// body, font-size
 {IMPORTANT}                             return 'IMPORTANT';
+
+{LPAREN}                          return 'LPAREN';
+{RPAREN}                          return 'RPAREN';
+{COMMA}                           return 'COMMA';
+{SEMICOLON}                       return 'SEMICOLON';
+{COLON}                           return 'COLON';
+{LBRACE}                            return 'LBRACE';
+{RBRACE}                            return 'RBRACE';
 
 .                                       return yytext;          	// {, }, +, :, ;
 
