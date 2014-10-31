@@ -55,11 +55,16 @@ describe 'Generate an Abstract Syntax Tree', ->
         }"
         assert.deepEqual parser.parse(css), styleSheet
 
-    xit 'parses a property with a function value', ->
+    it 'parses a property with a function value', ->
         styleSheet = new ast.StyleSheet [
-            new ast.Rule('p', [
+            new ast.Rule('html', [
                 new ast.Property('-webkit-tap-highlight-color', [
-                    new ast.Literal('rgba(0, 0, 0, 0)')
+                    new ast.Function('rgba', new ast.ValueList([
+                        new ast.Literal('0')
+                        new ast.Literal('0')
+                        new ast.Literal('0')
+                        new ast.Literal('0')
+                    ]))
                 ])
             ])
         ]

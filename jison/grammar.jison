@@ -82,9 +82,9 @@ valueList:
 ;
 
 value:
-  IDENTIFIER LPAREN valueList RPAREN            { $$ = new ast.Function($1, $3) }
-| IDENTIFIER                        { $$ = new ast.Literal($1) }
-| COLOR                             { $$ = new ast.Literal($1) }
+  IDENTIFIER LPAREN valueList RPAREN    { $$ = new ast.Function($1, new ast.ValueList($3)) }
+| IDENTIFIER                            { $$ = new ast.Literal($1) }
+| COLOR                                 { $$ = new ast.Literal($1) }
 | NUMBER                            { $$ = new ast.Literal($1) }
 | DIMENSION                         { $$ = new ast.Literal($1) }
 | NAME                              { $$ = new ast.Literal($1) }

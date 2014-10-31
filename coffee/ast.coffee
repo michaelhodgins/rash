@@ -152,7 +152,7 @@ class Function
     constructor: (@name, @values) ->
 
     toCSS: ->
-        ''
+        "#{@name}(#{@values.toCSS()})"
 
 ###
 Represents a literal value.
@@ -171,3 +171,4 @@ exports.Property = Property
 exports.Function = Function
 exports.Literal = Literal
 exports.ValueList = ValueList
+

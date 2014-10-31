@@ -22,6 +22,13 @@ describe 'Output valid CSS', ->
         rashedCode = "p {font-size: 12px}"
         assert.equal parser.parse(code).toCSS(), rashedCode
 
+    it 'compiles one rule with one property and one empty property', ->
+        code = "html {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+        }\n"
+        rashedCode = "html {-webkit-tap-highlight-color: rgba(0,0,0,0)}"
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
     it 'compiles one rule with an important property', ->
         code = "p{
             font-size: 12px !important
