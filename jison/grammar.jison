@@ -71,17 +71,16 @@ property:
 
 
 values:
+  valueGroup                                 { $$ = [ new ast.ValueGroup($1) ] }
+| values COMMA valueGroup                    { $$ = $1.concat(new ast.ValueGroup($3)) }
+;
+
+
+valueGroup:
   value                                      { $$ = [ $1 ] }
-| values value                               { $$ = $1.concat($2) }
-| valueList                                  { $$ = new ast.ValueList($1) }
+| valueGroup value                           { $$ = $1.concat($2) }
 ;
 
-
-
-valueList:
-  value COMMA valueList                      { $$ = [ $1 ].concat($3) }
-| value COMMA value                          { $$ = [$1, $3] }}
-;
 
 parameterList:
   /* empty */                                { $$ = [] }

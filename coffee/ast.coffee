@@ -129,13 +129,13 @@ class Property
         if @values instanceof Array
             values = @values.map (value) ->
                 value.toCSS()
-            .join " "
+            .join ','
         else
             values = @values.toCSS()
         "#{@name}: #{values}#{if @important then ' !important' else ''}"
 
 ###
-
+Represents a list of values as parameters to a function.
 ###
 class ParameterList
     constructor: (@values) ->
@@ -148,13 +148,14 @@ class ParameterList
 ###
 Represents a comma separated list of values.
 ###
-class ValueList
+class ValueGroup
     constructor: (@values) ->
 
     toCSS: ->
         @values.map (value) ->
             value.toCSS()
-        .join(',')
+        .join(' ')
+
 
 ###
 Represents a css function with a comma separated list of arguments.
@@ -182,5 +183,4 @@ exports.Property = Property
 exports.Function = Function
 exports.Literal = Literal
 exports.ParameterList = ParameterList
-exports.ValueList = ValueList
-
+exports.ValueGroup = ValueGroup

@@ -20,7 +20,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [
                 new ast.Property('font-size', [
-                    new ast.Literal('12px')
+                    new ast.ValueGroup([
+                        new ast.Literal('12px')
+                    ])
                 ])
             ])
         ]
@@ -33,7 +35,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [
                 new ast.Property('font-size', [
-                    new ast.Literal('12px')
+                    new ast.ValueGroup([
+                        new ast.Literal('12px')
+                    ])
                 ], true)
             ])
         ]
@@ -46,7 +50,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [
                 new ast.Property('font-size', [
-                    new ast.Literal('12px')
+                    new ast.ValueGroup([
+                        new ast.Literal('12px')
+                    ])
                 ])
             ])
         ]
@@ -59,12 +65,14 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('html', [
                 new ast.Property('-webkit-tap-highlight-color', [
-                    new ast.Function('rgba', new ast.ParameterList([
-                        new ast.Literal('0')
-                        new ast.Literal('0')
-                        new ast.Literal('0')
-                        new ast.Literal('0')
-                    ]))
+                    new ast.ValueGroup([
+                        new ast.Function('rgba', new ast.ParameterList([
+                            new ast.Literal('0')
+                            new ast.Literal('0')
+                            new ast.Literal('0')
+                            new ast.Literal('0')
+                        ]))
+                    ])
                 ])
             ])
         ]
@@ -77,7 +85,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [
                 new ast.Property('font-size', [
-                    new ast.Literal('12px')
+                    new ast.ValueGroup([
+                        new ast.Literal('12px')
+                    ])
                 ])
             ])
         ]
@@ -90,12 +100,20 @@ describe 'Generate an Abstract Syntax Tree', ->
     it 'parses properties with lists of name values', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [
-                new ast.Property('font-family', new ast.ValueList([
-                    new ast.Literal('Calibri')
-                    new ast.Literal('Helvetica')
-                    new ast.Literal('Arial')
-                    new ast.Literal('sans-serif')
-                ]))
+                new ast.Property('font-family', [
+                    new ast.ValueGroup([
+                        new ast.Literal('Calibri')
+                    ])
+                    new ast.ValueGroup([
+                        new ast.Literal('Helvetica')
+                    ])
+                    new ast.ValueGroup([
+                        new ast.Literal('Arial')
+                    ])
+                    new ast.ValueGroup([
+                        new ast.Literal('sans-serif')
+                    ])
+                ])
             ])
         ]
         css = 'p {
@@ -106,15 +124,29 @@ describe 'Generate an Abstract Syntax Tree', ->
     it 'parses properties with lists of string and name values', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [
-                new ast.Property('font-family', new ast.ValueList([
-                    new ast.Literal('"Helvetica Neue Light"')
-                    new ast.Literal('"HelveticaNeue-Light"')
-                    new ast.Literal('"Helvetica Neue"')
-                    new ast.Literal('Calibri')
-                    new ast.Literal('Helvetica')
-                    new ast.Literal('Arial')
-                    new ast.Literal('sans-serif')
-                ]))
+                new ast.Property('font-family', [
+                    new ast.ValueGroup([
+                        new ast.Literal('"Helvetica Neue Light"')
+                    ])
+                    new ast.ValueGroup([
+                        new ast.Literal('"HelveticaNeue-Light"')
+                    ])
+                    new ast.ValueGroup([
+                        new ast.Literal('"Helvetica Neue"')
+                    ])
+                    new ast.ValueGroup([
+                        new ast.Literal('Calibri')
+                    ])
+                    new ast.ValueGroup([
+                        new ast.Literal('Helvetica')
+                    ])
+                    new ast.ValueGroup([
+                        new ast.Literal('Arial')
+                    ])
+                    new ast.ValueGroup([
+                        new ast.Literal('sans-serif')
+                    ])
+                ])
             ])
         ]
         css = 'p {
@@ -122,17 +154,34 @@ describe 'Generate an Abstract Syntax Tree', ->
         }'
         assert.deepEqual parser.parse(css), styleSheet
 
-    xit 'parses properties with lists of related values', ->
+    it 'parses properties with lists of related values', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('.form-control', [
-                new ast.Property('-webkit-transition', new ast.ValueList([
-                    new ast.Literal('border-color ease-in-out .15s')
-                    new ast.Literal('box-shadow ease-in-out .15s')
-                ]))
-                new ast.Property('transition', new ast.ValueList([
-                    new ast.Literal('border-color ease-in-out .15s')
-                    new ast.Literal('box-shadow ease-in-out .15s')
-                ]))
+                new ast.Property('-webkit-transition', [
+                    new ast.ValueGroup([
+                        new ast.Literal('border-color')
+                        new ast.Literal('ease-in-out')
+                        new ast.Literal('.15s')
+                    ])
+                    new ast.ValueGroup([
+                        new ast.Literal('box-shadow')
+                        new ast.Literal('ease-in-out')
+                        new ast.Literal('.15s')
+                    ])
+                ])
+
+                new ast.Property('transition', [
+                    new ast.ValueGroup([
+                        new ast.Literal('border-color')
+                        new ast.Literal('ease-in-out')
+                        new ast.Literal('.15s')
+                    ])
+                    new ast.ValueGroup([
+                        new ast.Literal('box-shadow')
+                        new ast.Literal('ease-in-out')
+                        new ast.Literal('.15s')
+                    ])
+                ])
             ])
         ]
         css = ".form-control {
@@ -145,7 +194,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p strong', [
                 new ast.Property('font-size', [
-                    new ast.Literal('12px')
+                    new ast.ValueGroup([
+                        new ast.Literal('12px')
+                    ])
                 ])
             ])
         ]
@@ -158,7 +209,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p.well', [
                 new ast.Property('font-size', [
-                    new ast.Literal('24px')
+                    new ast.ValueGroup([
+                        new ast.Literal('24px')
+                    ])
                 ])
             ])
         ]
@@ -171,7 +224,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p.well.standout', [
                 new ast.Property('font-size', [
-                    new ast.Literal('36px')
+                    new ast.ValueGroup([
+                        new ast.Literal('36px')
+                    ])
                 ])
             ])
         ]
@@ -184,10 +239,14 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p.well strong', [
                 new ast.Property('font-size', [
-                    new ast.Literal('24px')
+                    new ast.ValueGroup([
+                        new ast.Literal('24px')
+                    ])
                 ])
                 new ast.Property('font-weight', [
-                    new ast.Literal('600')
+                    new ast.ValueGroup([
+                        new ast.Literal('600')
+                    ])
                 ])
             ])
         ]
@@ -201,13 +260,19 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('#block-search-form .form-submit, .page-search .search-form input.form-submit, .page-taxonomy-term .search-form input.form-submit', [
                 new ast.Property('background-color', [
-                    new ast.Literal('#060608')
+                    new ast.ValueGroup([
+                        new ast.Literal('#060608')
+                    ])
                 ])
                 new ast.Property('color', [
-                    new ast.Literal('#eae827')
+                    new ast.ValueGroup([
+                        new ast.Literal('#eae827')
+                    ])
                 ])
                 new ast.Property('border', [
-                    new ast.Literal('none')
+                    new ast.ValueGroup([
+                        new ast.Literal('none')
+                    ])
                 ])
             ])
         ]
@@ -222,10 +287,14 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('#container > .box', [
                 new ast.Property('float', [
-                    new ast.Literal('left')
+                    new ast.ValueGroup([
+                        new ast.Literal('left')
+                    ])
                 ])
                 new ast.Property('padding-bottom', [
-                    new ast.Literal('15px')
+                    new ast.ValueGroup([
+                        new ast.Literal('15px')
+                    ])
                 ])
             ])
         ]
@@ -239,7 +308,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('h2 ~ p', [
                 new ast.Property('margin-bottom', [
-                    new ast.Literal('20px')
+                    new ast.ValueGroup([
+                        new ast.Literal('20px')
+                    ])
                 ])
             ])
         ]
@@ -252,10 +323,14 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p + p', [
                 new ast.Property('text-indent', [
-                    new ast.Literal('1.5em')
+                    new ast.ValueGroup([
+                        new ast.Literal('1.5em')
+                    ])
                 ])
                 new ast.Property('margin-bottom', [
-                    new ast.Literal('0')
+                    new ast.ValueGroup([
+                        new ast.Literal('0')
+                    ])
                 ])
             ])
         ]
@@ -269,7 +344,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('a:hover', [
                 new ast.Property('color', [
-                    new ast.Literal('red')
+                    new ast.ValueGroup([
+                        new ast.Literal('red')
+                    ])
                 ])
             ])
         ]
@@ -282,13 +359,19 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('.container::before', [
                 new ast.Property('content', [
-                    new ast.Literal('""')
+                    new ast.ValueGroup([
+                        new ast.Literal('""')
+                    ])
                 ])
                 new ast.Property('display', [
-                    new ast.Literal('block')
+                    new ast.ValueGroup([
+                        new ast.Literal('block')
+                    ])
                 ])
                 new ast.Property('background-color', [
-                    new ast.Literal('#141414')
+                    new ast.ValueGroup([
+                        new ast.Literal('#141414')
+                    ])
                 ])
             ])
         ]
@@ -304,10 +387,14 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('input[type="text"]', [
                 new ast.Property('background-color', [
-                    new ast.Literal('#444')
+                    new ast.ValueGroup([
+                        new ast.Literal('#444')
+                    ])
                 ])
                 new ast.Property('width', [
-                    new ast.Literal('200px')
+                    new ast.ValueGroup([
+                        new ast.Literal('200px')
+                    ])
                 ])
             ])
         ]
@@ -321,7 +408,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('div[id*="post"]', [
                 new ast.Property('color', [
-                    new ast.Literal('red')
+                    new ast.ValueGroup([
+                        new ast.Literal('red')
+                    ])
                 ])
             ])
         ]
@@ -334,7 +423,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('h1[rel^="external"]', [
                 new ast.Property('color', [
-                    new ast.Literal('red')
+                    new ast.ValueGroup([
+                        new ast.Literal('red')
+                    ])
                 ])
             ])
         ]
@@ -348,7 +439,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('h1[rel$="external"]', [
                 new ast.Property('color', [
-                    new ast.Literal('red')
+                    new ast.ValueGroup([
+                        new ast.Literal('red')
+                    ])
                 ])
             ])
         ]
@@ -361,7 +454,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('h1[rel~="external"]', [
                 new ast.Property('color', [
-                    new ast.Literal('red')
+                    new ast.ValueGroup([
+                        new ast.Literal('red')
+                    ])
                 ])
             ])
         ]
@@ -375,7 +470,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('h1[rel|="friend"]', [
                 new ast.Property('color', [
-                    new ast.Literal('red')
+                    new ast.ValueGroup([
+                        new ast.Literal('red')
+                    ])
                 ])
             ])
         ]
@@ -389,7 +486,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('h1[rel="handsome"][title^="Important"]', [
                 new ast.Property('color', [
-                    new ast.Literal('red')
+                    new ast.ValueGroup([
+                        new ast.Literal('red')
+                    ])
                 ])
             ])
         ]
@@ -403,7 +502,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('h1[rel|="friend"].well', [
                 new ast.Property('color', [
-                    new ast.Literal('red')
+                    new ast.ValueGroup([
+                        new ast.Literal('red')
+                    ])
                 ])
             ])
         ]
@@ -417,7 +518,9 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('h1[rel|="friend"].well em', [
                 new ast.Property('color', [
-                    new ast.Literal('red')
+                    new ast.ValueGroup([
+                        new ast.Literal('red')
+                    ])
                 ])
             ])
         ]
@@ -432,7 +535,9 @@ describe 'Generate an Abstract Syntax Tree', ->
             new ast.MediaQuery('@media screen and (min-width: 400px) and (max-width: 700px)', [
                 new ast.Rule('h1', [
                     new ast.Property('font-size', [
-                        new ast.Literal('12px')
+                        new ast.ValueGroup([
+                            new ast.Literal('12px')
+                        ])
                     ])
                 ])
             ])
@@ -449,10 +554,14 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [
                 new ast.Property('font-size', [
-                    new ast.Literal('12px')
+                    new ast.ValueGroup([
+                        new ast.Literal('12px')
+                    ])
                 ])
                 new ast.Property('color', [
-                    new ast.Literal('#030303')
+                    new ast.ValueGroup([
+                        new ast.Literal('#030303')
+                    ])
                 ])
             ])
         ]
@@ -468,10 +577,14 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [
                 new ast.Property('font-size', [
-                    new ast.Literal('12px')
+                    new ast.ValueGroup([
+                        new ast.Literal('12px')
+                    ])
                 ])
                 new ast.Property('color', [
-                    new ast.Literal('#030303')
+                    new ast.ValueGroup([
+                        new ast.Literal('#030303')
+                    ])
                 ])
             ])
         ]
@@ -489,12 +602,16 @@ describe 'Generate an Abstract Syntax Tree', ->
             new ast.MediaQuery('@media screen and (min-width: 400px) and (max-width: 700px)', [
                 new ast.Rule('h1', [
                     new ast.Property('font-size', [
-                        new ast.Literal('12px')
+                        new ast.ValueGroup([
+                            new ast.Literal('12px')
+                        ])
                     ])
                 ])
                 new ast.Rule('a', [
                     new ast.Property('color', [
-                        new ast.Literal('white')
+                        new ast.ValueGroup([
+                            new ast.Literal('white')
+                        ])
                     ])
                 ])
             ])
@@ -516,12 +633,16 @@ describe 'Generate an Abstract Syntax Tree', ->
             new ast.MediaQuery('@media screen and (min-width: 400px) and (max-width: 700px)', [
                 new ast.Rule('h1', [
                     new ast.Property('font-size', [
-                        new ast.Literal('11px')
+                        new ast.ValueGroup([
+                            new ast.Literal('11px')
+                        ])
                     ])
                 ])
                 new ast.Rule('a', [
                     new ast.Property('color', [
-                        new ast.Literal('white')
+                        new ast.ValueGroup([
+                            new ast.Literal('white')
+                        ])
                     ])
                 ])
             ])

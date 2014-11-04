@@ -40,7 +40,7 @@ RBRACE                          '}'
 \s+                             ;                       	// ignore spaces, line breaks
 
 // Numbers
-({NUMBER}|{SHORT_NUMBER})(px|em|\%)     return 'DIMENSION';     	// 10px, 1em, 50%, .67em
+({NUMBER}|{SHORT_NUMBER})(px|em|\%|s)     return 'DIMENSION';     	// 10px, 1em, 50%, .67em, .15s
 {NUMBER}|{SHORT_NUMBER}                 return 'NUMBER';        	// 0, .1
 \#[0-9A-Fa-f]{3,6}                      return 'COLOR';         	// #fff, #f0f0f0
 
