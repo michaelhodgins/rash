@@ -59,7 +59,7 @@ describe 'Generate an Abstract Syntax Tree', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('html', [
                 new ast.Property('-webkit-tap-highlight-color', [
-                    new ast.Function('rgba', new ast.ValueList([
+                    new ast.Function('rgba', new ast.ParameterList([
                         new ast.Literal('0')
                         new ast.Literal('0')
                         new ast.Literal('0')
@@ -72,6 +72,7 @@ describe 'Generate an Abstract Syntax Tree', ->
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
         }'
         assert.deepEqual parser.parse(css), styleSheet
+
     it 'ignores comments', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [
@@ -119,6 +120,25 @@ describe 'Generate an Abstract Syntax Tree', ->
         css = 'p {
             font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
         }'
+        assert.deepEqual parser.parse(css), styleSheet
+
+    xit 'parses properties with lists of related values', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('.form-control', [
+                new ast.Property('-webkit-transition', new ast.ValueList([
+                    new ast.Literal('border-color ease-in-out .15s')
+                    new ast.Literal('box-shadow ease-in-out .15s')
+                ]))
+                new ast.Property('transition', new ast.ValueList([
+                    new ast.Literal('border-color ease-in-out .15s')
+                    new ast.Literal('box-shadow ease-in-out .15s')
+                ]))
+            ])
+        ]
+        css = ".form-control {
+            -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+        }"
         assert.deepEqual parser.parse(css), styleSheet
 
     it 'parses a rule with a nested selector', ->

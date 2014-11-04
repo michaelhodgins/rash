@@ -67,6 +67,14 @@ describe 'Output valid CSS', ->
         rashedCode = """p {font-family: "Helvetica Neue Light","HelveticaNeue-Light","Helvetica Neue",Calibri,Helvetica,Arial,sans-serif}"""
         assert.equal parser.parse(code).toCSS(), rashedCode
 
+    xit 'compiles properties with lists of related values', ->
+        code = ".form-control {
+            -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+        }\n"
+        rashedCode = ".form-control {-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s}"
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
     it 'compiles nested selectors', ->
         code = """p strong {
             font-weight: bold

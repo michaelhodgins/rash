@@ -135,6 +135,17 @@ class Property
         "#{@name}: #{values}#{if @important then ' !important' else ''}"
 
 ###
+
+###
+class ParameterList
+    constructor: (@values) ->
+
+    toCSS: ->
+        @values.map (value) ->
+            value.toCSS()
+        .join(',')
+
+###
 Represents a comma separated list of values.
 ###
 class ValueList
@@ -170,5 +181,6 @@ exports.Rule = Rule
 exports.Property = Property
 exports.Function = Function
 exports.Literal = Literal
+exports.ParameterList = ParameterList
 exports.ValueList = ValueList
 
