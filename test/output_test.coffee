@@ -229,6 +229,13 @@ describe 'Output valid CSS', ->
         rashedCode = "@charset \"UTF-8\";h1 {font-size: 12px}"
         assert.equal parser.parse(code).toCSS(), rashedCode
 
+    it 'compiles @import', ->
+        code = "@import 'custom.css';
+            @import url('landscape.css') screen and (orientation:landscape);\n
+        "
+        rashedCode = "@import 'custom.css';\n@import url('landscape.css') screen and (orientation:landscape);"
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
     it 'compiles two rationalized selectors', ->
         code = 'p {
             font-size: 12px

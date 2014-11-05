@@ -27,6 +27,7 @@ sections:
 
 section:
   media_query                                { $$ = [ $1 ] }
+| import                                     { $$ = [ $1 ] }
 | rule                                       { $$ = [ $1 ] }
 ;
 
@@ -41,6 +42,10 @@ rules:
 
 rule:
   selectorList LBRACE properties RBRACE      { $$ = new ast.Rule($1, $3) }
+;
+
+import:
+  IMPORT SEMICOLON                           { $$ = new ast.Import($1) }
 ;
 
 selectorList:

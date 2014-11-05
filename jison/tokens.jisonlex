@@ -25,6 +25,7 @@ MEDIA_QUERY                     '@media' ([^@{]+)
 IMPORTANT                       '!' [iI][mM][pP][oO][rR][tT][aA][nN][tT]
                                                             // matches !important (case-insensitive - there has to be a better way)
 CHARSET                         '@charset'                  // matches @charset
+IMPORT                          '@import' ([^@{;]+)          // matches @import
 
 LPAREN                          '('
 RPAREN                          ')'
@@ -53,6 +54,8 @@ DIVISION                        '/'
 // media queries
 {MEDIA_QUERY}                           return 'MEDIA_QUERY';       //@media screen and (min-width: 400px) and (max-width: 700px)
 {CHARSET}                               return 'CHARSET';           //@charset
+{IMPORT}                                return 'IMPORT';            //@import 'custom.css';, @import "common.css" screen, projection;
+
 
 // Selectors
 {UNIVERSAL}						        return 'SELECTOR';      	// *

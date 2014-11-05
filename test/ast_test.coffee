@@ -584,6 +584,17 @@ describe 'Generate an Abstract Syntax Tree', ->
 
         assert.deepEqual parser.parse(css), styleSheet
 
+    it 'parses @import', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Import "@import 'custom.css'"
+            new ast.Import "@import url('landscape.css') screen and (orientation:landscape)"
+        ]
+
+        css ="@import 'custom.css';\n
+            @import url('landscape.css') screen and (orientation:landscape);\n
+        "
+        assert.deepEqual parser.parse(css), styleSheet
+
     it 'rationalizes two selectors', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [

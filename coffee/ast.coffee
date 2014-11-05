@@ -96,6 +96,14 @@ class MediaQuery
             position++
         @
 
+###
+Represents an import statement.
+###
+class Import
+    constructor: (@imports) ->
+
+    toCSS: ->
+        "#{@imports};"
 
 ###
 Represents a single CSS rule, consisting on a selector and one or more properties.
@@ -180,6 +188,7 @@ class Literal
 # export the classes
 exports.StyleSheet = StyleSheet
 exports.MediaQuery = MediaQuery
+exports.Import = Import
 exports.Rule = Rule
 exports.Property = Property
 exports.Function = Function
