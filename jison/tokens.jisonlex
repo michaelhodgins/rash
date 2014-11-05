@@ -33,6 +33,7 @@ COLON                           ':'
 LBRACE                          '{'
 RBRACE                          '}'
 EQUAL                           '='
+DIVISION                        '/'
 
 %%
 
@@ -73,6 +74,7 @@ EQUAL                           '='
 {LBRACE}                                return 'LBRACE';            // {
 {RBRACE}                                return 'RBRACE';            // }
 {EQUAL}                                 return 'EQUAL';             // =
+{DIVISION}                              return 'DIVISION';          // /
 
 .                                       return yytext;          	// {, }, +, :, ;
 

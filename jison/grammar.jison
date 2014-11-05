@@ -107,6 +107,7 @@ value:
   IDENTIFIER LPAREN parameterList RPAREN     { $$ = new ast.Function($1, new ast.ParameterList($3)) }
 | IDENTIFIER                                 { $$ = new ast.Literal($1) }
 | COLOR                                      { $$ = new ast.Literal($1) }
+| NUMBER DIVISION NUMBER                     { $$ = new ast.Literal($1 + $2 + $3) }
 | NUMBER                                     { $$ = new ast.Literal($1) }
 | DIMENSION                                  { $$ = new ast.Literal($1) }
 | NAME                                       { $$ = new ast.Literal($1) }
