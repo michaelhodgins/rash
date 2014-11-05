@@ -81,6 +81,23 @@ describe 'Generate an Abstract Syntax Tree', ->
         }'
         assert.deepEqual parser.parse(css), styleSheet
 
+    it 'parses a property with a function value containing a named parameter', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('.btn.disabled', [
+                new ast.Property('filter', [
+                    new ast.ValueGroup([
+                        new ast.Function('alpha', new ast.ParameterList([
+                            new ast.Literal('opacity=65')
+                        ]))
+                    ])
+                ])
+            ])
+        ]
+        css = '.btn.disabled {
+            filter: alpha(opacity=65)
+        }'
+        assert.deepEqual parser.parse(css), styleSheet
+
     it 'ignores comments', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [

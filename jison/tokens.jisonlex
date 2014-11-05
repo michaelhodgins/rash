@@ -32,6 +32,7 @@ SEMICOLON                       ';'
 COLON                           ':'
 LBRACE                          '{'
 RBRACE                          '}'
+EQUAL                           '='
 
 %%
 
@@ -40,7 +41,7 @@ RBRACE                          '}'
 \s+                             ;                       	// ignore spaces, line breaks
 
 // Numbers
-({NUMBER}|{SHORT_NUMBER})(px|em|\%|s)     return 'DIMENSION';     	// 10px, 1em, 50%, .67em, .15s
+({NUMBER}|{SHORT_NUMBER})(px|em|\%|s)   return 'DIMENSION';     	// 10px, 1em, 50%, .67em, .15s
 {NUMBER}|{SHORT_NUMBER}                 return 'NUMBER';        	// 0, .1
 \#[0-9A-Fa-f]{3,6}                      return 'COLOR';         	// #fff, #f0f0f0
 
@@ -64,13 +65,14 @@ RBRACE                          '}'
 {NAME}                                  return 'IDENTIFIER';    	// body, font-size
 {IMPORTANT}                             return 'IMPORTANT';
 
-{LPAREN}                          return 'LPAREN';
-{RPAREN}                          return 'RPAREN';
-{COMMA}                           return 'COMMA';
-{SEMICOLON}                       return 'SEMICOLON';
-{COLON}                           return 'COLON';
-{LBRACE}                            return 'LBRACE';
-{RBRACE}                            return 'RBRACE';
+{LPAREN}                                return 'LPAREN';            // (
+{RPAREN}                                return 'RPAREN';            // )
+{COMMA}                                 return 'COMMA';             // ,
+{SEMICOLON}                             return 'SEMICOLON';         // ;
+{COLON}                                 return 'COLON';             // :
+{LBRACE}                                return 'LBRACE';            // {
+{RBRACE}                                return 'RBRACE';            // }
+{EQUAL}                                 return 'EQUAL';             // =
 
 .                                       return yytext;          	// {, }, +, :, ;
 

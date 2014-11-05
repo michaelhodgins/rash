@@ -84,9 +84,24 @@ valueGroup:
 
 parameterList:
   /* empty */                                { $$ = [] }
-| value                                      { $$ = [ $1 ] }
-| parameterList COMMA value                  { $$ = $1.concat($3) }
+| parameter                                  { $$ = [ $1 ] }
+| parameterList COMMA parameter              { $$ = $1.concat($3) }
 ;
+
+parameter:
+  IDENTIFIER EQUAL paramValue                { $$ = new ast.Literal($1 + $2 + $3) }
+| paramValue                                 { $$ = new ast.Literal($1) }
+;
+
+paramValue:
+  IDENTIFIER                                 { $$ = $1 }
+| COLOR                                      { $$ = $1 }
+| NUMBER                                     { $$ = $1 }
+| DIMENSION                                  { $$ = $1 }
+| NAME                                       { $$ = $1 }
+| string                                     { $$ = $1 }
+;
+
 
 value:
   IDENTIFIER LPAREN parameterList RPAREN     { $$ = new ast.Function($1, new ast.ParameterList($3)) }

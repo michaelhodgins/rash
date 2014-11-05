@@ -1,3 +1,8 @@
 html {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
 }
+
+.btn.disabled {
+    filter: alpha(opacity=65)
+}
+
