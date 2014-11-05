@@ -16,7 +16,8 @@
 
 // Parsing starts here.
 stylesheet:
-  sections EOF                               { return new ast.StyleSheet($1) }
+  CHARSET string SEMICOLON sections EOF      { return new ast.StyleSheet($4, $2) }
+| sections EOF                               { return new ast.StyleSheet($1) }
 ;
 
 sections:

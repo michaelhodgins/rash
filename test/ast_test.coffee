@@ -567,6 +567,23 @@ describe 'Generate an Abstract Syntax Tree', ->
 
         assert.deepEqual parser.parse(css), styleSheet
 
+    it 'parses @charset', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Rule('h1', [
+                new ast.Property('font-size', [
+                    new ast.ValueGroup([
+                        new ast.Literal('12px')
+                    ])
+                ])
+            ])
+        ], '"UTF-8"'
+        css = "@charset \"UTF-8\";\n
+        h1 {
+            font-size: 12px;
+        }\n"
+
+        assert.deepEqual parser.parse(css), styleSheet
+
     it 'rationalizes two selectors', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [

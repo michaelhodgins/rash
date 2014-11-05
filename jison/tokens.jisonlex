@@ -24,6 +24,7 @@ ATTRIBUTE                       ([\[]{NAME}([\*\^\$~\|]?[=]?({NAME}|{STRING}))[\
 MEDIA_QUERY                     '@media' ([^@{]+)
 IMPORTANT                       '!' [iI][mM][pP][oO][rR][tT][aA][nN][tT]
                                                             // matches !important (case-insensitive - there has to be a better way)
+CHARSET                         '@charset'                  // matches @charset
 
 LPAREN                          '('
 RPAREN                          ')'
@@ -51,6 +52,7 @@ DIVISION                        '/'
 
 // media queries
 {MEDIA_QUERY}                           return 'MEDIA_QUERY';       //@media screen and (min-width: 400px) and (max-width: 700px)
+{CHARSET}                               return 'CHARSET';           //@charset
 
 // Selectors
 {UNIVERSAL}						        return 'SELECTOR';      	// *

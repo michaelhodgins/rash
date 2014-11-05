@@ -2,12 +2,14 @@
 Represents the root of the CSS AST.
 ###
 class StyleSheet
-    constructor: (@rules) ->
+    constructor: (@rules, @charset = null) ->
 
     toCSS: ->
-        @rules.map (rule) ->
+        css = @rules.map (rule) ->
             rule.toCSS()
         .join  "\n"
+        css = "@charset #{@charset};" + css if @charset
+        css
 
     rash: ->
         #TODO there's a lot of duplicated code here

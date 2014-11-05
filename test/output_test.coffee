@@ -22,11 +22,18 @@ describe 'Output valid CSS', ->
         rashedCode = "p {font-size: 12px}"
         assert.equal parser.parse(code).toCSS(), rashedCode
 
-    it 'compiles one rule with one property and one empty property', ->
+    it 'compiles a rule with a property that has a function as a value', ->
         code = "html {
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
         }\n"
         rashedCode = "html {-webkit-tap-highlight-color: rgba(0,0,0,0)}"
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
+    it 'compiles a rule with a property that has a function with a named value', ->
+        code = ".btn.disabled {
+            filter: alpha(opacity=65)
+        }\n"
+        rashedCode = ".btn.disabled {filter: alpha(opacity=65)}"
         assert.equal parser.parse(code).toCSS(), rashedCode
 
     it 'compiles one rule with an important property', ->
@@ -212,6 +219,14 @@ describe 'Output valid CSS', ->
                 }
             }'
         rashedCode = '@media screen and (min-width: 400px) and (max-width: 700px) {h1 {font-size: 12px}}'
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
+    it 'compiles @charset', ->
+        code = "@charset \"UTF-8\";\n
+        h1 {
+            font-size: 12px;
+        }\n"
+        rashedCode = "@charset \"UTF-8\";h1 {font-size: 12px}"
         assert.equal parser.parse(code).toCSS(), rashedCode
 
     it 'compiles two rationalized selectors', ->
