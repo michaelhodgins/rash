@@ -21,18 +21,23 @@ stylesheet:
 ;
 
 sections:
-  section                                    { $$ = $1 }
+  section                                    { $$ = [ $1 ] }
 | sections section                           { $$ = $1.concat($2) }
 ;
 
 section:
-  media_query                                { $$ = [ $1 ] }
-| import                                     { $$ = [ $1 ] }
-| rule                                       { $$ = [ $1 ] }
+  media_query                                { $$ = $1 }
+| namespace                                  { $$ = $1 }
+| import                                     { $$ = $1 }
+| rule                                       { $$ = $1 }
 ;
 
 media_query:
   MEDIA_QUERY LBRACE rules RBRACE            { $$ = new ast.MediaQuery($1.trim(), $3) }
+;
+
+namespace:
+  NAMESPACE SEMICOLON                        { $$ = new ast.Namespace($1) }
 ;
 
 rules:

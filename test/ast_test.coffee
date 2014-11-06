@@ -595,6 +595,20 @@ describe 'Generate an Abstract Syntax Tree', ->
         "
         assert.deepEqual parser.parse(css), styleSheet
 
+    it 'parses @namespace', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Namespace "@namespace url(http://www.w3.org/1999/xhtml)"
+            new ast.Namespace "@namespace svg url(http://www.w3.org/2000/svg)"
+            new ast.Rule('svg|a', [])
+            new ast.Rule('*|a', [])
+        ]
+
+        css ="@namespace url(http://www.w3.org/1999/xhtml);
+            @namespace svg url(http://www.w3.org/2000/svg);\n
+            svg|a {}\n
+            *|a {}\n
+        "
+        assert.deepEqual parser.parse(css), styleSheet
     it 'rationalizes two selectors', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [

@@ -97,13 +97,22 @@ class MediaQuery
         @
 
 ###
-Represents an import statement.
+Represents an @import statement.
 ###
 class Import
     constructor: (@imports) ->
 
     toCSS: ->
         "#{@imports};"
+
+###
+Represents a @namespace declaration.
+###
+class Namespace
+    constructor: (@namespace) ->
+
+    toCSS: ->
+        "#{@namespace};"
 
 ###
 Represents a single CSS rule, consisting on a selector and one or more properties.
@@ -189,6 +198,7 @@ class Literal
 exports.StyleSheet = StyleSheet
 exports.MediaQuery = MediaQuery
 exports.Import = Import
+exports.Namespace = Namespace
 exports.Rule = Rule
 exports.Property = Property
 exports.Function = Function

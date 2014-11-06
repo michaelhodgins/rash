@@ -229,6 +229,15 @@ describe 'Output valid CSS', ->
         rashedCode = "@charset \"UTF-8\";h1 {font-size: 12px}"
         assert.equal parser.parse(code).toCSS(), rashedCode
 
+    it 'compiles @namespace', ->
+        code = "@namespace url(http://www.w3.org/1999/xhtml);
+            @namespace svg url(http://www.w3.org/2000/svg);\n
+            svg|a {}\n
+            *|a {}\n
+        "
+        rashedCode = "@namespace url(http://www.w3.org/1999/xhtml);\n@namespace svg url(http://www.w3.org/2000/svg);\nsvg|a {}\n*|a {}"
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
     it 'compiles @import', ->
         code = "@import 'custom.css';
             @import url('landscape.css') screen and (orientation:landscape);\n
