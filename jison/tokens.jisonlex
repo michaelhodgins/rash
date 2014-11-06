@@ -14,7 +14,6 @@ NAME                            [-a-zA-Z\*][-\w\|]*         	// matches: body, b
 BRACKET_NAME                    [-a-zA-Z][-\w\(\)\[\]]*    // matches p:nth-child(odd), audio:not([controls]), etc
 SELECTOR                        ((\.|\#|\:\:|\:){BRACKET_NAME})+
                                                             // matches: #id, .class, :hover and ::before
-//UNIVERSAL						'*'							// matches *, the univeral selector
 CHILD							'>'							// matches >, the child combinator
 SIBLING							'~'							// matches ~, the sibling combinator
 ADJACENT						'+'							// matches +, the adjacent combinator
@@ -27,6 +26,7 @@ IMPORTANT                       '!' [iI][mM][pP][oO][rR][tT][aA][nN][tT]
 CHARSET                         '@charset'                  // matches @charset
 IMPORT                          '@import' [^@{;]+         // matches @import
 NAMESPACE                       '@namespace' [^@{;]+      // matches @namespace
+PAGE                            '@page' [\W]+[\:]?[a-z]+       // matches @page
 
 LPAREN                          '('
 RPAREN                          ')'
@@ -57,9 +57,9 @@ DIVISION                        '/'
 {CHARSET}                               return 'CHARSET';           //@charset
 {IMPORT}                                return 'IMPORT';            //@import 'custom.css';, @import "common.css" screen, projection;
 {NAMESPACE}                             return 'NAMESPACE';         //@namespace url(http://www.w3.org/1999/xhtml);, @namespace svg url(http://www.w3.org/2000/svg);
+{PAGE}                                  return 'PAGE';              //@page :first, @page rotate
 
 // Selectors
-//{UNIVERSAL}						        return 'SELECTOR';      	// *
 {SELECTOR}                              return 'SELECTOR';      	// .class, #id
 {NAME}{SELECTOR}                        return 'SELECTOR';      	// div.class, body#id
 {NAME}{ATTRIBUTE}{SELECTOR}             return 'SELECTOR';      	// div[rel=external].class

@@ -115,6 +115,19 @@ class Namespace
         "#{@namespace};"
 
 ###
+Represents a @page block
+###
+class Page
+    constructor: (@page, @properties) ->
+
+    toCSS: ->
+        properties = @properties.map (property) ->
+            property.toCSS()
+        .join ";"
+        "#{@page} {#{properties}}"
+
+
+###
 Represents a single CSS rule, consisting on a selector and one or more properties.
 ###
 class Rule
@@ -199,6 +212,7 @@ exports.StyleSheet = StyleSheet
 exports.MediaQuery = MediaQuery
 exports.Import = Import
 exports.Namespace = Namespace
+exports.Page = Page
 exports.Rule = Rule
 exports.Property = Property
 exports.Function = Function

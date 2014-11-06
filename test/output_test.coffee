@@ -245,6 +245,13 @@ describe 'Output valid CSS', ->
         rashedCode = "@import 'custom.css';\n@import url('landscape.css') screen and (orientation:landscape);"
         assert.equal parser.parse(code).toCSS(), rashedCode
 
+    it 'compiles @page', ->
+        code = "@page :first {\n
+            margin: 20px\n
+        }"
+        rashedCode = "@page :first {margin: 20px}"
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
     it 'compiles two rationalized selectors', ->
         code = 'p {
             font-size: 12px

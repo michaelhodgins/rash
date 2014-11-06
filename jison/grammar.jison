@@ -28,6 +28,7 @@ sections:
 section:
   media_query                                { $$ = $1 }
 | namespace                                  { $$ = $1 }
+| page                                       { $$ = $1 }
 | import                                     { $$ = $1 }
 | rule                                       { $$ = $1 }
 ;
@@ -38,6 +39,10 @@ media_query:
 
 namespace:
   NAMESPACE SEMICOLON                        { $$ = new ast.Namespace($1) }
+;
+
+page:
+  PAGE LBRACE properties RBRACE              { $$ = new ast.Page($1, $3) }
 ;
 
 rules:

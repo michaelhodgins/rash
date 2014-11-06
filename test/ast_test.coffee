@@ -609,6 +609,23 @@ describe 'Generate an Abstract Syntax Tree', ->
             *|a {}\n
         "
         assert.deepEqual parser.parse(css), styleSheet
+
+    it 'parses @page', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.Page "@page :first", [
+                new ast.Property('margin', [
+                    new ast.ValueGroup([
+                        new ast.Literal('20px')
+                    ])
+                ])
+            ]
+        ]
+
+        css ="@page :first {\n
+            margin: 20px\n
+        }"
+        assert.deepEqual parser.parse(css), styleSheet
+
     it 'rationalizes two selectors', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [
