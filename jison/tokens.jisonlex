@@ -27,6 +27,7 @@ CHARSET                         '@charset'                  // matches @charset
 IMPORT                          '@import' [^@{;]+         // matches @import
 NAMESPACE                       '@namespace' [^@{;]+      // matches @namespace
 PAGE                            '@page' [\W]+[\:]?[a-z]+       // matches @page
+FONTFACE                        '@font-face'                  // matches @font-face
 
 LPAREN                          '('
 RPAREN                          ')'
@@ -58,6 +59,7 @@ DIVISION                        '/'
 {IMPORT}                                return 'IMPORT';            //@import 'custom.css';, @import "common.css" screen, projection;
 {NAMESPACE}                             return 'NAMESPACE';         //@namespace url(http://www.w3.org/1999/xhtml);, @namespace svg url(http://www.w3.org/2000/svg);
 {PAGE}                                  return 'PAGE';              //@page :first, @page rotate
+{FONTFACE}                              return 'FONTFACE';          //@font-face
 
 // Selectors
 {SELECTOR}                              return 'SELECTOR';      	// .class, #id

@@ -252,6 +252,14 @@ describe 'Output valid CSS', ->
         rashedCode = "@page :first {margin: 20px}"
         assert.equal parser.parse(code).toCSS(), rashedCode
 
+    it 'compiles @font-face', ->
+        code = """@font-face {\n
+          font-family: "Bitstream Vera Serif Bold";\n
+          src: url("https://mdn.mozillademos.org/files/2468/VeraSeBd.ttf");\n
+        }\n"""
+        rashedCode = """@font-face {font-family: "Bitstream Vera Serif Bold";src: url("https://mdn.mozillademos.org/files/2468/VeraSeBd.ttf")}"""
+        assert.equal parser.parse(code).toCSS(), rashedCode
+
     it 'compiles two rationalized selectors', ->
         code = 'p {
             font-size: 12px

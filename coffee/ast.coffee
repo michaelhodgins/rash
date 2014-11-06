@@ -126,6 +126,18 @@ class Page
         .join ";"
         "#{@page} {#{properties}}"
 
+###
+Represents a Font Face
+###
+class FontFace
+    constructor: (@properties) ->
+
+    toCSS: ->
+        properties = @properties.map (property) ->
+            property.toCSS()
+        .join ";"
+        "@font-face {#{properties}}"
+
 
 ###
 Represents a single CSS rule, consisting on a selector and one or more properties.
@@ -213,6 +225,7 @@ exports.MediaQuery = MediaQuery
 exports.Import = Import
 exports.Namespace = Namespace
 exports.Page = Page
+exports.FontFace = FontFace
 exports.Rule = Rule
 exports.Property = Property
 exports.Function = Function

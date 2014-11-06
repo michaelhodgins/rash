@@ -29,6 +29,7 @@ section:
   media_query                                { $$ = $1 }
 | namespace                                  { $$ = $1 }
 | page                                       { $$ = $1 }
+| font_face                                  { $$ = $1 }
 | import                                     { $$ = $1 }
 | rule                                       { $$ = $1 }
 ;
@@ -43,6 +44,10 @@ namespace:
 
 page:
   PAGE LBRACE properties RBRACE              { $$ = new ast.Page($1, $3) }
+;
+
+font_face:
+  FONTFACE LBRACE properties RBRACE          { $$ = new ast.FontFace($3) }
 ;
 
 rules:

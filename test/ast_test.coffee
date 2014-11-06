@@ -626,6 +626,30 @@ describe 'Generate an Abstract Syntax Tree', ->
         }"
         assert.deepEqual parser.parse(css), styleSheet
 
+    it 'parses @font-face', ->
+        styleSheet = new ast.StyleSheet [
+            new ast.FontFace [
+                new ast.Property('font-family', [
+                    new ast.ValueGroup([
+                        new ast.Literal('"Bitstream Vera Serif Bold"')
+                    ])
+                ])
+                new ast.Property('src', [
+                    new ast.ValueGroup([
+                        new ast.Function('url', new ast.ParameterList([
+                            new ast.Literal('"https://mdn.mozillademos.org/files/2468/VeraSeBd.ttf"')
+                        ]))
+                    ])
+                ])
+            ]
+        ]
+
+        css = """@font-face {\n
+          font-family: "Bitstream Vera Serif Bold";\n
+          src: url("https://mdn.mozillademos.org/files/2468/VeraSeBd.ttf");\n
+        }\n"""
+        assert.deepEqual parser.parse(css), styleSheet
+
     it 'rationalizes two selectors', ->
         styleSheet = new ast.StyleSheet [
             new ast.Rule('p', [
