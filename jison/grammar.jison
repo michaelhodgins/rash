@@ -30,6 +30,7 @@ section:
 | namespace                                  { $$ = $1 }
 | page                                       { $$ = $1 }
 | font_face                                  { $$ = $1 }
+| ms_viewport                                { $$ = $1 }
 | import                                     { $$ = $1 }
 | rule                                       { $$ = $1 }
 ;
@@ -48,6 +49,10 @@ page:
 
 font_face:
   FONTFACE LBRACE properties RBRACE          { $$ = new ast.FontFace($3) }
+;
+
+ms_viewport:
+  MS_VIEWPORT LBRACE properties RBRACE       { $$ = new ast.MsViewport($3) }
 ;
 
 rules:

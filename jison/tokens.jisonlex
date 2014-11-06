@@ -10,8 +10,8 @@ DOUBLE_QUOTE_STRING				'"' ([^\n\r\f\\"]| '\\' {NL}|{ESCAPE})* '"'
 SINGLE_QUOTE_STRING				"'" ([^\n\r\f\\']| "\\" {NL}|{ESCAPE})* "'"
 STRING							{DOUBLE_QUOTE_STRING}|{SINGLE_QUOTE_STRING}
 
-NAME                            [-a-zA-Z\*][-\w\|]*         	// matches: body, background-color, auto and myClassName
-BRACKET_NAME                    [-a-zA-Z][-\w\(\)\[\]]*    // matches p:nth-child(odd), audio:not([controls]), etc
+NAME                            [-a-zA-Z\*][-\w\|]*         // matches: body, background-color, auto and myClassName
+BRACKET_NAME                    [-a-zA-Z][-\w\(\)\[\]]*     // matches p:nth-child(odd), audio:not([controls]), etc
 SELECTOR                        ((\.|\#|\:\:|\:){BRACKET_NAME})+
                                                             // matches: #id, .class, :hover and ::before
 CHILD							'>'							// matches >, the child combinator
@@ -24,10 +24,11 @@ MEDIA_QUERY                     '@media' ([^@{]+)
 IMPORTANT                       '!' [iI][mM][pP][oO][rR][tT][aA][nN][tT]
                                                             // matches !important (case-insensitive - there has to be a better way)
 CHARSET                         '@charset'                  // matches @charset
-IMPORT                          '@import' [^@{;]+         // matches @import
-NAMESPACE                       '@namespace' [^@{;]+      // matches @namespace
-PAGE                            '@page' [\W]+[\:]?[a-z]+       // matches @page
-FONTFACE                        '@font-face'                  // matches @font-face
+IMPORT                          '@import' [^@{;]+           // matches @import
+NAMESPACE                       '@namespace' [^@{;]+        // matches @namespace
+PAGE                            '@page' [\W]+[\:]?[a-z]+    // matches @page
+FONTFACE                        '@font-face'                // matches @font-face
+MS_VIEWPORT                     '@-ms-viewport'             // matches @-ms-viewport
 
 LPAREN                          '('
 RPAREN                          ')'
@@ -60,6 +61,7 @@ DIVISION                        '/'
 {NAMESPACE}                             return 'NAMESPACE';         //@namespace url(http://www.w3.org/1999/xhtml);, @namespace svg url(http://www.w3.org/2000/svg);
 {PAGE}                                  return 'PAGE';              //@page :first, @page rotate
 {FONTFACE}                              return 'FONTFACE';          //@font-face
+{MS_VIEWPORT}                           return 'MS_VIEWPORT';       //@-ms-viewport
 
 // Selectors
 {SELECTOR}                              return 'SELECTOR';      	// .class, #id
